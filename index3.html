@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50 auto;"></canvas>
+<script>
+    var canvas=document.getElementById("canvas");
+    var context=canvas.getContext("2d");
+
+    context.beginPath();
+    context.lineWidth=20;
+    context.strokeStyle="#4480CA";
+    context.arc(290,290,105,0,Math.PI*2);
+    context.stroke();
+
+    context.beginPath();
+    context.lineWidth=26;
+    context.strokeStyle="#3BC7C4";
+    context.arc(290,290,70,Math.PI/3,Math.PI/3*5);
+    context.stroke();
+
+    context.beginPath();
+    context.lineWidth=58;
+    context.strokeStyle = "#4480CA";
+    context.arc(290,290,29,0,Math.PI*2);
+    context.stroke();
+
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.font = "16px serif";
+    context.fillText("50", 290, 290);
+
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.font = "16px serif";
+    context.fillText("min", 290, 310);
+</script>
+</body>
+</html>

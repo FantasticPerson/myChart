@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
+    <script>
+        var canvas=document.getElementById("canvas");
+        var context=canvas.getContext("2d");
+
+        context.lineWidth=14;
+        context.beginPath();
+        context.strokeStyle="#238B23";
+        context.arc(290,290,180,Math.PI/3*2,Math.PI/3*4);
+        context.stroke();
+
+        context.lineWidth=14;
+        context.beginPath();
+        context.strokeStyle="#FFAB26";
+        context.arc(290,290,180,Math.PI/3*4,Math.PI/3*6);
+        context.stroke();
+
+        context.lineWidth=14;
+        context.beginPath();
+        context.strokeStyle="#FF4500";
+        context.arc(290,290,180,Math.PI/3*6,Math.PI/3*7);
+        context.stroke();
+
+        for(var i=0;i<6;i++){
+            context.save();
+            context.lineWidth = 5;
+            context.strokeStyle = "#238B23";
+            if(i>2 && i<5){
+                context.strokeStyle = "#FFAB26";
+            } else if(i===5){
+                context.strokeStyle = "#FF4500";
+            }
+            context.translate(290, 290);
+            context.rotate( Math.PI/180 * (60*i) -Math.PI/180 * 150);
+            context.beginPath();
+            context.moveTo(0, -150);
+            context.lineTo(0, -187);
+            context.stroke();
+            context.closePath();
+            context.restore();
+        }
+
+        for (var i = 0; i < 26; i++) {
+            context.save();
+            context.lineWidth = 4;
+            context.strokeStyle = "#238B23";
+            if(i>=11 && i< 21){
+                context.strokeStyle = "#FFAB26";
+            } else if(i>=21){
+                context.strokeStyle = "#FF4500";
+            }
+            context.translate(290, 290);
+            context.rotate( Math.PI/180 * (12*i) -Math.PI/180 * 150);
+            context.beginPath();
+            context.moveTo(0, -160);
+            context.lineTo(0, -174);
+            context.stroke();
+            context.closePath();
+            context.restore();
+        }
+        for(var i=0;i<6;i++){
+            context.save();
+            context.fillStyle = "#238B23";
+            if(i>2 && i<5){
+                context.fillStyle = "#FFAB26";
+            } else if(i===5){
+                context.fillStyle = "#FF4500";
+            }
+            context.font = "25px serif";
+            context.textBaseline = "middle";
+            context.textAlign = 'center';
+            context.fillText(String(20*i), 290+135*Math.sin(Math.PI/180 * (60*i) -Math.PI/180 * 150) , 290-135*Math.cos(Math.PI/180 * (60*i) -Math.PI/180 * 150));
+            context.restore();
+        }
+    </script>
+</body>
+</html>

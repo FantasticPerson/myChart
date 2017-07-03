@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50 auto;"></canvas>
+<script>
+    var canvas=document.getElementById("canvas");
+    var context=canvas.getContext("2d")
+
+    context.lineWidth=160;
+    context.beginPath();
+    context.strokeStyle="red";
+    context.arc(290,290,210,Math.PI,Math.PI/3*4);
+    context.stroke();
+    context.lineWidth=160;
+
+    context.beginPath();
+    context.strokeStyle="blue";
+    context.arc(290,290,210,Math.PI/3*4,Math.PI/3*5);
+    context.stroke();
+
+    context.beginPath();
+    context.strokeStyle = "orange";
+    context.arc(290,290,210,Math.PI/3*5,Math.PI*2);
+    context.stroke();
+
+//    context.strokeText()
+    context.fillStyle = 'white';
+    context.font = "16px serif";
+    context.fillText("低", 30, 180);
+
+</script>
+</body>
+</html>

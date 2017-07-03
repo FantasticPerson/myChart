@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body style="background-color: #aaaaaa">
+    <canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
+    <script>
+        var canvas=document.getElementById("canvas");
+        var context=canvas.getContext("2d");
+
+        context.lineWidth=230;
+        context.beginPath();
+        context.strokeStyle="#FFF";
+        context.arc(290,290,115,Math.PI/6*5,Math.PI/6*13);
+        context.stroke();
+
+        context.lineWidth=40;
+        context.beginPath();
+        context.strokeStyle="#ECB93E";
+        context.arc(290,290,186,Math.PI/6*5,Math.PI/6*13);
+        context.stroke();
+
+        context.lineWidth=4;
+        context.beginPath();
+        context.strokeStyle="#ECB93E";
+        context.arc(290,290,230,Math.PI/6*5,Math.PI/6*13);
+        context.stroke();
+
+        for(var i=0;i<9;i++){
+
+        }
+    </script>
+</body>
+</html>

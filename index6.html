@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin: 50px auto;"></canvas>
+<script>
+    var canvas=document.getElementById("canvas");
+    var context=canvas.getContext("2d");
+
+    context.lineWidth=40;
+    context.beginPath();
+    context.strokeStyle="#238B23";
+    context.arc(290,290,180,Math.PI/3*2+Math.PI/2,Math.PI/3*4+Math.PI/2);
+    context.stroke();
+
+    context.lineWidth=40;
+    context.beginPath();
+    context.strokeStyle="#FFAB26";
+    context.arc(290,290,180,Math.PI/3*4+Math.PI/2,Math.PI/3*6+Math.PI/2);
+    context.stroke();
+
+    context.lineWidth=40;
+    context.beginPath();
+    context.strokeStyle="#FF4500";
+    context.arc(290,290,180,Math.PI/3*6+Math.PI/2,Math.PI/3*7+Math.PI/2);
+    context.stroke();
+
+    for(var i=0;i<9;i++){
+        context.save();
+        context.lineWidth = 3;
+        context.strokeStyle = "#FFF";
+        context.translate(290, 290);
+        context.rotate( Math.PI/180 * (30*i+30) -Math.PI/180 * 60);
+        context.beginPath();
+        context.moveTo(0, -160);
+        context.lineTo(0, -200);
+        context.stroke();
+        context.closePath();
+        context.restore();
+    }
+    for(var i=1;i<50;i++){
+        context.save();
+        context.lineWidth = 3;
+        context.strokeStyle = "#FFF";
+        context.translate(290, 290);
+        context.rotate( Math.PI/180 * (6*i) -Math.PI/180 * 60);
+        context.beginPath();
+        context.moveTo(0, -185);
+        context.lineTo(0, -200);
+        context.stroke();
+        context.closePath();
+        context.restore();
+    }
+
+    for(var i=0;i<4;i++){
+        context.save();
+        context.fillStyle = "#333";
+        var angle = -Math.PI/180*30;
+        var text = "弱";
+        if(i===1){
+            text = "低";
+            angle = Math.PI/180*30;
+        } else if(i===2){
+            text = "中";
+            angle = Math.PI/180*120;
+        } else if(i===3){
+            text = "高";
+            angle = Math.PI/180*210;
+        }
+        context.font = "25px serif";
+        context.textBaseline = "middle";
+        context.textAlign = 'center';
+        context.fillText(text, 290+135*Math.sin(angle) , 290-135*Math.cos(angle));
+        context.restore();
+    }
+</script>
+</body>
+</html>

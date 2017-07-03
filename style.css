@@ -1,0 +1,142 @@
+.div1{
+    width: 200px;
+    height: 200px;
+    background: transparent;
+    border-radius: 170px;
+    border: 70px solid #FFFFFF;
+    box-shadow: 0 0 26px rgba(0,0,0,0.5);
+}
+.div2{
+    width: 200px;
+    height: 200px;
+    border-radius: 150px;
+    border: 50px solid #D8EEC4;
+    position: absolute;
+    margin-top: -50px;
+    margin-left: -50px;
+}
+
+.div3 {
+    width: 200px;
+    height: 200px;
+    border-radius: 120px;
+    border: 20px solid #6FB631;
+    margin-top: -20px;
+    margin-left: -20px;
+    box-shadow: inset 0 0 14px rgba(0,0,0,0.5);
+}
+
+.div4{
+    height: 260px;
+    width: 3px;
+    background-color: transparent;
+    border-top: 20px solid #6FB631;
+    border-bottom: 20px solid transparent;
+    margin: auto;
+    /*transform: translateY(-150px);*/
+    transform: translate(100px,-150px) rotate(53deg);
+    margin-top: 100px;
+    position: absolute;
+}
+
+.rotate1{
+    transform: translate(100px,-150px) rotate(0deg);
+}
+
+.rotate2{
+    transform: translate(100px,-150px) rotate(24deg);
+}
+.rotate3{
+    transform: translate(100px,-150px) rotate(48deg);
+}
+.rotate4{
+    transform: translate(100px,-150px) rotate(72deg);
+}
+.rotate5{
+    transform: translate(100px,-150px) rotate(96deg);
+}
+.rotate6{
+    transform: translate(100px,-150px) rotate(120deg);
+}
+.rotate7{
+    transform: translate(100px,-150px) rotate(144deg);
+}
+.rotate8{
+    transform: translate(100px,-150px) rotate(168deg);
+}
+.rotate9{
+    transform: translate(100px,-150px) rotate(192deg);
+}
+.rotate10{
+    transform: translate(100px,-150px) rotate(216deg);
+}
+.rotate11{
+    transform: translate(100px,-150px) rotate(240deg);
+}
+.rotate12{
+    transform: translate(100px,-150px) rotate(264deg);
+}
+.rotate13{
+    transform: translate(100px,-150px) rotate(288deg);
+}
+.rotate14{
+    transform: translate(100px,-150px) rotate(312deg);
+}
+.rotate15{
+    transform: translate(100px,-150px) rotate(336deg);
+}
+
+
+.shanxing{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    background-color: yellow;
+}
+
+.sx1{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    transform: rotate(0deg);
+    clip: rect(0px,100px,200px,0px); /*这个clip属性用来绘制半圆，在clip的rect范围内的内容显示出来，使用clip属性，元素必须是absolute的 */
+    border-radius: 100px;
+    background-color: #f00;
+    /*-webkit-animation: an1 2s infinite linear; */
+}
+
+
+.sx2{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    transform: rotate(0deg);
+    clip: rect(0px,100px,200px,0px);
+    border-radius: 100px;
+    background-color: #f00;
+    /*-webkit-animation: an2 2s infinite linear;*/
+}
+
+/*绘制一个60度扇形*/
+.shanxing1 .sx1{transform: rotate(-30deg);}
+.shanxing1 .sx2{transform: rotate(-150deg);}
+
+.shax {
+    clip: rect(0,580px,290px,0);
+    position: absolute;
+    width: 580px;
+    height: 580px;
+    border-radius: 290px;
+    background-color: antiquewhite;
+}
+
+.shax1 {
+    width: 260px;
+    height: 260px;
+    background-color: white;
+    border-radius: 130px;
+    position: absolute;
+    margin-top: 160px;
+    margin-left: 160px;
+}
