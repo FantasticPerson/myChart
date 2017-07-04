@@ -13,24 +13,133 @@
         context.lineWidth=230;
         context.beginPath();
         context.strokeStyle="#FFF";
-        context.arc(290,290,115,Math.PI/6*5,Math.PI/6*13);
+        context.arc(290,290,115,Math.PI/6*5-Math.PI/36,Math.PI/6*13+Math.PI/36);
         context.stroke();
 
         context.lineWidth=40;
         context.beginPath();
         context.strokeStyle="#ECB93E";
-        context.arc(290,290,186,Math.PI/6*5,Math.PI/6*13);
+        context.arc(290,290,186,Math.PI/6*5-Math.PI/36,Math.PI/6*13+Math.PI/36);
         context.stroke();
 
         context.lineWidth=4;
         context.beginPath();
         context.strokeStyle="#ECB93E";
-        context.arc(290,290,230,Math.PI/6*5,Math.PI/6*13);
+        context.arc(290,290,230,Math.PI/6*5-Math.PI/36,Math.PI/6*13+Math.PI/36);
         context.stroke();
 
         for(var i=0;i<9;i++){
+            context.save();
+            context.lineWidth = 3;
+            context.strokeStyle = "#ECB93E";
+            context.translate(290, 290);
+            context.rotate( Math.PI/180 * (30*i - 1.2) -Math.PI/180 * 120);
+            context.beginPath();
+            context.moveTo(0, -170);
+            context.lineTo(0, -232);
+            context.stroke();
+            context.closePath();
+            context.restore();
 
+            context.save();
+            context.lineWidth = 3;
+            context.strokeStyle = "#ECB93E";
+            context.translate(290, 290);
+            context.rotate( Math.PI/180 * (30*i + 1.2) -Math.PI/180 * 120);
+            context.beginPath();
+            context.moveTo(0, -170);
+            context.lineTo(0, -232);
+            context.stroke();
+            context.closePath();
+            context.restore();
         }
+
+        for(var i=1;i<9;i++){
+            context.save();
+            context.lineWidth = 3;
+            context.strokeStyle = "#ECB93E";
+            context.translate(290, 290);
+            context.rotate( Math.PI/180 * 30*i -Math.PI/180 * 135);
+            context.beginPath();
+            context.moveTo(0, -170);
+            context.lineTo(0, -232);
+            context.stroke();
+            context.closePath();
+            context.restore();
+
+            context.save();
+            context.lineWidth = 3;
+            context.strokeStyle = "#ECB93E";
+            context.translate(290, 290);
+            context.rotate( Math.PI/180 * (30*i-7.5) -Math.PI/180 * 135);
+            context.beginPath();
+            context.moveTo(0, -220);
+            context.lineTo(0, -232);
+            context.stroke();
+            context.closePath();
+            context.restore();
+
+            context.save();
+            context.lineWidth = 3;
+            context.strokeStyle = "#ECB93E";
+            context.translate(290, 290);
+            context.rotate( Math.PI/180 * (30*i+7.5) -Math.PI/180 * 135);
+            context.beginPath();
+            context.moveTo(0, -220);
+            context.lineTo(0, -232);
+            context.stroke();
+            context.closePath();
+            context.restore();
+        }
+
+        context.save();
+        context.lineWidth = 3;
+        context.strokeStyle = "#ECB93E";
+        context.translate(290, 290);
+        context.rotate( Math.PI/6*5-Math.PI/7.2);
+        context.beginPath();
+        context.moveTo(0, -170);
+        context.lineTo(0, -232);
+        context.stroke();
+        context.closePath();
+        context.restore();
+
+        context.save();
+        context.lineWidth = 3;
+        context.strokeStyle = "#ECB93E";
+        context.translate(290, 290);
+        context.rotate( Math.PI/6*8-Math.PI/36);
+        context.beginPath();
+        context.moveTo(0, -170);
+        context.lineTo(0, -232);
+        context.stroke();
+        context.closePath();
+        context.restore();
+
+        for(var i=0;i<9;i++){
+            context.save();
+            context.fillStyle = "#FFF";
+            context.font = "25px serif";
+            context.textBaseline = "middle";
+            context.textAlign = 'center';
+            var angle = Math.PI/180 * 30*i-Math.PI/180 * 120;
+            context.fillText(String(20*i), 290+184*Math.sin(angle) , 290-184*Math.cos(angle));
+            context.restore();
+
+            context.lineWidth=3;
+            context.beginPath();
+            context.strokeStyle="#ECB93E";
+            context.arc(290+144*Math.sin(angle),290-144*Math.cos(angle),1.5,0,Math.PI*2);
+            context.stroke();
+        }
+
+        context.save();
+        context.fillStyle = "#ECB93E";
+        context.font = "35px serif";
+        context.textBaseline = "middle";
+        context.textAlign = 'center';
+        context.fillText('km/h', 290 , 190);
+        context.restore();
     </script>
 </body>
 </html>

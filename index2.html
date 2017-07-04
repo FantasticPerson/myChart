@@ -26,10 +26,33 @@
     context.arc(290,290,210,Math.PI/3*5,Math.PI*2);
     context.stroke();
 
-//    context.strokeText()
-    context.fillStyle = 'white';
-    context.font = "16px serif";
-    context.fillText("低", 30, 180);
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillStyle = '#FFF';
+    context.font = "25px serif";
+    var angle1 = Math.PI/3*5;
+    context.fillText("低", 290+250*Math.sin(angle1), 290-250*Math.cos(angle1));
+
+    context.fillStyle = '#FFF';
+    context.font = "25px serif";
+    angle1 = Math.PI/3*6;
+    context.fillText("中", 290+250*Math.sin(angle1), 290-250*Math.cos(angle1));
+
+    context.fillStyle = '#FFF';
+    context.font = "40px serif";
+    angle1 = Math.PI/3*6;
+    context.fillText("完成率", 290+180*Math.sin(angle1), 290-180*Math.cos(angle1));
+
+    context.fillStyle = '#FFF';
+    context.font = "25px serif";
+    angle1 = Math.PI/3*7;
+    context.fillText("高", 290+250*Math.sin(angle1), 290-250*Math.cos(angle1));
+
+
+    context.fillStyle = '#66B4E9';
+    context.font = "40px serif";
+    context.fillText("62.37%", 290, 250);
+
 
 </script>
 </body>

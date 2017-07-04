@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
+<script>
+    var canvas=document.getElementById("canvas");
+    var context=canvas.getContext("2d");
+
+    context.lineWidth=170;
+    context.beginPath();
+    context.strokeStyle="#000";
+    context.arc(390,390,195,Math.PI,Math.PI*2);
+    context.stroke();
+
+    for(var i=0;i<6;i++){
+        context.lineWidth=60;
+        context.beginPath();
+        context.strokeStyle="#3AB2ED";
+        context.arc(390,390,250,Math.PI+Math.PI/6*i,Math.PI+Math.PI/6*(i+1));
+        context.stroke();
+
+        var color = "#6FB631";
+        if(i === 1){
+            color = "#8ED153";
+        } else if(i === 2){
+            color = "#BCE698";
+        } else if(i === 3){
+            color = "#F4C664";
+        } else if(i === 4){
+            color = "#F4A720"
+        } else if(i === 5){
+            color = "#FE8209";
+        }
+        context.lineWidth=110;
+        context.beginPath();
+        context.strokeStyle=color;
+        context.arc(390,390,165,Math.PI+Math.PI/6*i,Math.PI+Math.PI/6*(i+1));
+        context.stroke();
+    }
+
+    for(var i=0;i<5;i++){
+        context.save();
+        context.lineWidth = 3;
+        context.strokeStyle = "#FFF";
+        context.translate(390, 390);
+        context.rotate(Math.PI/6*(i+1)-Math.PI/2);
+        context.beginPath();
+        context.moveTo(0, -110);
+        context.lineTo(0, -280);
+        context.stroke();
+        context.closePath();
+        context.restore();
+    }
+
+    var charCode = "A".charCodeAt(0);
+    for(var i=0;i<6;i++){
+        context.save();
+        context.fillStyle = "#FFF";
+        context.font = "35px serif";
+        context.textBaseline = "middle";
+        context.textAlign = 'center';
+        var angle = Math.PI/6*(i+1)-Math.PI/2-Math.PI/12;
+        context.fillText(String.fromCharCode(charCode+i), 390+240*Math.sin(angle) , 390-240*Math.cos(angle));
+        context.restore();
+    }
+</script>
+</body>
+</html>

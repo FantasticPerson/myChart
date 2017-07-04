@@ -16,26 +16,138 @@
     context.stroke();
 
     context.beginPath();
-    context.lineWidth=26;
+    context.lineWidth=65;
     context.strokeStyle="#3BC7C4";
-    context.arc(290,290,70,Math.PI/3,Math.PI/3*5);
+    context.arc(290,290,32.5,Math.PI/3,Math.PI/3*5);
     context.stroke();
 
     context.beginPath();
-    context.lineWidth=58;
+    context.lineWidth=35;
     context.strokeStyle = "#4480CA";
-    context.arc(290,290,29,0,Math.PI*2);
+    context.arc(290,290,17.5,0,Math.PI*2);
     context.stroke();
 
     context.beginPath();
     context.fillStyle = 'white';
-    context.font = "16px serif";
-    context.fillText("50", 290, 290);
+    context.font = "30px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("50", 290, 274);
 
     context.beginPath();
     context.fillStyle = 'white';
-    context.font = "16px serif";
-    context.fillText("min", 290, 310);
+    context.font = "30px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("min", 290, 300);
+
+    for(var i=0;i<12;i++){
+        context.save();
+        context.lineWidth = 4;
+        context.fillStyle = "#4480CA";
+        context.translate(290, 290);
+        context.rotate( Math.PI/180 * (30*i));
+        context.beginPath();
+        context.moveTo(0, -86);
+        context.lineTo(0, -95);
+        context.stroke();
+        context.closePath();
+        context.restore();
+    }
+
+
+    context.beginPath();
+    context.lineWidth=20;
+    context.strokeStyle="#4480CA";
+    context.arc(290,560,105,0,Math.PI*2);
+    context.stroke();
+
+    context.beginPath();
+    context.lineWidth=65;
+    context.strokeStyle="red";
+    context.arc(290,560,32.5,Math.PI/2*3,Math.PI/24);
+    context.stroke();
+
+    context.beginPath();
+    context.lineWidth=35;
+    context.strokeStyle = "#4480CA";
+    context.arc(290,560,17.5,0,Math.PI*2);
+    context.stroke();
+
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.font = "30px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("15", 290, 544);
+
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.font = "30px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("min", 290, 570);
+
+    for(var i=0;i<12;i++){
+        context.save();
+        context.lineWidth = 4;
+        context.fillStyle = "#4480CA";
+        context.translate(290, 560);
+        context.rotate( Math.PI/180 * (30*i));
+        context.beginPath();
+        context.moveTo(0, -86);
+        context.lineTo(0, -95);
+        context.stroke();
+        context.closePath();
+        context.restore();
+    }
+
+
+    context.beginPath();
+    context.lineWidth=30;
+    context.strokeStyle="#4480CA";
+    context.arc(590,450,135,0,Math.PI*2);
+    context.stroke();
+
+    context.beginPath();
+    context.lineWidth=90;
+    context.strokeStyle="#AEB9E7";
+    context.arc(590,450,45,0,Math.PI*2);
+    context.stroke();
+
+    context.beginPath();
+    context.lineWidth=50;
+    context.strokeStyle = "#4480CA";
+    context.arc(590,450,25,0,Math.PI*2);
+    context.stroke();
+
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.font = "40px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("60", 590, 430);
+
+    context.beginPath();
+    context.fillStyle = 'white';
+    context.font = "40px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("min", 590, 464);
+
+    for(var i=0;i<12;i++){
+        context.save();
+        context.lineWidth = 4;
+        context.fillStyle = "#4480CA";
+        context.translate(590, 450);
+        context.rotate( Math.PI/180 * (30*i));
+        context.beginPath();
+        context.moveTo(0, -110);
+        context.lineTo(0, -150);
+        context.stroke();
+        context.closePath();
+        context.restore();
+    }
 </script>
 </body>
 </html>

@@ -40,50 +40,50 @@
 }
 
 .rotate1{
-    transform: translate(100px,-150px) rotate(0deg);
+    transform: translate(101.5px,-150px) rotate(0deg);
 }
 
 .rotate2{
-    transform: translate(100px,-150px) rotate(24deg);
+    transform: translate(101.5px,-150px) rotate(24deg);
 }
 .rotate3{
-    transform: translate(100px,-150px) rotate(48deg);
+    transform: translate(101.5px,-150px) rotate(48deg);
 }
 .rotate4{
-    transform: translate(100px,-150px) rotate(72deg);
+    transform: translate(101.5px,-150px) rotate(72deg);
 }
 .rotate5{
-    transform: translate(100px,-150px) rotate(96deg);
+    transform: translate(101.5px,-150px) rotate(96deg);
 }
 .rotate6{
-    transform: translate(100px,-150px) rotate(120deg);
+    transform: translate(101.5px,-150px) rotate(120deg);
 }
 .rotate7{
-    transform: translate(100px,-150px) rotate(144deg);
+    transform: translate(101.5px,-150px) rotate(144deg);
 }
 .rotate8{
-    transform: translate(100px,-150px) rotate(168deg);
+    transform: translate(101.5px,-150px) rotate(168deg);
 }
 .rotate9{
-    transform: translate(100px,-150px) rotate(192deg);
+    transform: translate(101.5px,-150px) rotate(192deg);
 }
 .rotate10{
-    transform: translate(100px,-150px) rotate(216deg);
+    transform: translate(101.5px,-150px) rotate(216deg);
 }
 .rotate11{
-    transform: translate(100px,-150px) rotate(240deg);
+    transform: translate(101.5px,-150px) rotate(240deg);
 }
 .rotate12{
-    transform: translate(100px,-150px) rotate(264deg);
+    transform: translate(101.5px,-150px) rotate(264deg);
 }
 .rotate13{
-    transform: translate(100px,-150px) rotate(288deg);
+    transform: translate(101.5px,-150px) rotate(288deg);
 }
 .rotate14{
-    transform: translate(100px,-150px) rotate(312deg);
+    transform: translate(101.5px,-150px) rotate(312deg);
 }
 .rotate15{
-    transform: translate(100px,-150px) rotate(336deg);
+    transform: translate(101.5px,-150px) rotate(336deg);
 }
 
 
@@ -103,7 +103,6 @@
     clip: rect(0px,100px,200px,0px); /*这个clip属性用来绘制半圆，在clip的rect范围内的内容显示出来，使用clip属性，元素必须是absolute的 */
     border-radius: 100px;
     background-color: #f00;
-    /*-webkit-animation: an1 2s infinite linear; */
 }
 
 
@@ -115,7 +114,6 @@
     clip: rect(0px,100px,200px,0px);
     border-radius: 100px;
     background-color: #f00;
-    /*-webkit-animation: an2 2s infinite linear;*/
 }
 
 /*绘制一个60度扇形*/
