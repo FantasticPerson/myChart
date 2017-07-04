@@ -140,6 +140,22 @@
         context.textAlign = 'center';
         context.fillText('km/h', 290 , 190);
         context.restore();
+
+        context.strokeStyle = "red";
+        context.lineWidth=5;
+        context.translate(290,290);
+        context.rotate(Math.PI/3);
+        context.beginPath();
+        context.moveTo(0,0);
+        context.lineTo(0,-210);
+//        context.lineTo(280,290);
+//        context.lineTo(290,130);
+//        context.lineTo(300,290);
+//        context.lineTo(290,310);
+        context.stroke();
+        context.closePath();
+        context.restore();
+
     </script>
 </body>
 </html>

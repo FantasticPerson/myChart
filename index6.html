@@ -76,6 +76,28 @@
         context.fillText(text, 290+135*Math.sin(angle) , 290-135*Math.cos(angle));
         context.restore();
     }
+
+    context.fillStyle = "#FFAB26";
+    context.beginPath();
+    context.translate(290,290);
+    context.rotate(Math.PI/2);
+    context.moveTo(0,0);
+    context.lineTo(0,20);
+    context.lineTo(-10,0);
+    context.lineTo(0,-160);
+    context.lineTo(10,0);
+    context.lineTo(0,20);
+    context.fill();
+    context.closePath();
+    context.restore();
+
+    context.save();
+//    context.translate(290,290);
+    context.lineWidth=4;
+    context.beginPath();
+    context.strokeStyle="#FFF";
+    context.arc(0,0,2,0,Math.PI*2);
+    context.stroke();
 </script>
 </body>
 </html>

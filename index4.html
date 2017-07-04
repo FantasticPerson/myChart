@@ -79,6 +79,28 @@
             context.fillText(String(20*i), 290+135*Math.sin(Math.PI/180 * (60*i) -Math.PI/180 * 150) , 290-135*Math.cos(Math.PI/180 * (60*i) -Math.PI/180 * 150));
             context.restore();
         }
+
+        context.fillStyle = "#FFAB26";
+        context.beginPath();
+        context.moveTo(290,290);
+        context.lineTo(290,310);
+        context.lineTo(280,290);
+        context.lineTo(290,130);
+        context.lineTo(300,290);
+        context.lineTo(290,310);
+        context.fill();
+        context.closePath();
+        context.restore();
+
+
+        context.save();
+        context.lineWidth=4;
+        context.beginPath();
+        context.strokeStyle="#FFF";
+        context.arc(290,290,2,0,Math.PI*2);
+        context.stroke();
+
+
     </script>
 </body>
 </html>

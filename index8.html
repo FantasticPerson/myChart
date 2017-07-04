@@ -67,6 +67,34 @@
         context.fillText(String.fromCharCode(charCode+i), 390+240*Math.sin(angle) , 390-240*Math.cos(angle));
         context.restore();
     }
+
+    context.save();
+    context.translate(390,390);
+    context.rotate(Math.PI/13*2);
+    context.beginPath();
+    context.fillStyle = "#3AB2ED";
+    context.moveTo(0,0);
+    context.lineTo(-30,0);
+    context.lineTo(0,-200);
+    context.lineTo(30,0);
+    context.lineTo(0,0);
+    context.fill();
+    context.restore();
+
+    context.save();
+    context.translate(390,390);
+    context.beginPath();
+    context.lineWidth = 30;
+    context.strokeStyle = "#3AB2ED";
+    context.arc(0,0,15,0,Math.PI*2);
+    context.stroke();
+
+    context.save();
+    context.beginPath();
+    context.lineWidth = 10;
+    context.strokeStyle = "white";
+    context.arc(0,0,5,0,Math.PI*2);
+    context.stroke();
 </script>
 </body>
 </html>

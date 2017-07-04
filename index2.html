@@ -4,7 +4,7 @@
     <title></title>
 </head>
 <body>
-<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50 auto;"></canvas>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
 <script>
     var canvas=document.getElementById("canvas");
     var context=canvas.getContext("2d")
@@ -49,11 +49,26 @@
     context.fillText("高", 290+250*Math.sin(angle1), 290-250*Math.cos(angle1));
 
 
+    context.translate(290,290);
+    context.rotate(Math.PI/3);
+    context.fillStyle = "rgba(255,255,255,0.8)";
+    context.beginPath();
+    context.moveTo(0,0);
+    context.lineTo(-40,0);
+    context.lineTo(0,-260);
+    context.lineTo(40,0);
+    context.lineTo(0,0);
+    context.fill();
+    context.restore();
+
+
+    context.save();
+    context.rotate(-Math.PI/3);
+    context.beginPath();
     context.fillStyle = '#66B4E9';
     context.font = "40px serif";
-    context.fillText("62.37%", 290, 250);
-
-
+    context.fillText("62.37%", 0, -40);
+    context.restore();
 </script>
 </body>
 </html>
