@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
+<script>
+    var canvas=document.getElementById("canvas");
+    var context=canvas.getContext("2d");
+
+    context.beginPath();
+    context.lineWidth=200;
+    context.strokeStyle = "#FFF";
+    context.shadowColor = "#000";
+    context.shadowBlur = 40;
+    context.arc(290,290,100,0,Math.PI*2);
+    context.stroke();
+    context.restore();
+
+    context.beginPath();
+    context.lineWidth=40;
+    context.strokeStyle = "#D8EEC4";
+    context.shadowBlur = 0;
+    context.arc(290,290,162,0,Math.PI*2);
+    context.stroke();
+    context.restore();
+
+    context.beginPath();
+    context.lineWidth=24;
+    context.strokeStyle = "#6FB631";
+    context.shadowBlur = 0;
+    context.arc(290,290,130,0,Math.PI*2);
+    context.stroke();
+    context.restore();
+
+    for(var i=0;i<15;i++){
+        context.save();
+        context.lineWidth = 3;
+        context.translate(290,290);
+        context.rotate(Math.PI/15*i*2);
+        context.beginPath();
+        context.moveTo(0,-180);
+        context.lineTo(0,-155);
+        context.stroke();
+        context.closePath();
+        context.restore();
+    }
+
+    context.save();
+//    context.rotate(-Math.PI/2);
+    context.beginPath();
+    context.fillStyle ="#333";
+    context.font = "65px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("17.6",290,260);
+    context.closePath();
+    context.restore();
+
+
+    context.save();
+    context.lineWidth = 0;
+    context.fillStyle = "#6FB631";
+    context.translate(290,290);
+    context.rotate(Math.PI/2);
+    context.beginPath();
+    context.moveTo(0,145);
+    context.lineTo(-10,145);
+    context.lineTo(0,175);
+    context.lineTo(10,145);
+    context.lineTo(0,145);
+    context.fill();
+    context.closePath();
+</script>
+</body>
+</html>

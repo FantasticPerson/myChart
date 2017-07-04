@@ -99,7 +99,13 @@
         context.strokeStyle="#FFF";
         context.arc(290,290,2,0,Math.PI*2);
         context.stroke();
+        context.restore();
 
+        context.save();
+        context.font = "30px serif";
+        context.textBaseline = "middle";
+        context.textAlign = 'center';
+        context.fillText("55.06%",290,450);
 
     </script>
 </body>

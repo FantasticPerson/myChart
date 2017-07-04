@@ -92,12 +92,33 @@
     context.restore();
 
     context.save();
-//    context.translate(290,290);
     context.lineWidth=4;
     context.beginPath();
     context.strokeStyle="#FFF";
     context.arc(0,0,2,0,Math.PI*2);
     context.stroke();
+
+    context.save();
+    context.rotate(-Math.PI/2);
+    context.beginPath();
+    context.fillStyle ="#333";
+    context.font = "30px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("仪表盘",-160,-20);
+    context.closePath();
+    context.restore();
+
+    context.save();
+    context.rotate(-Math.PI/2);
+    context.beginPath();
+    context.fillStyle ="#87CEEB";
+    context.font = "50px serif";
+    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.fillText("50%",-160,20);
+    context.closePath();
+    context.restore();
 </script>
 </body>
 </html>
