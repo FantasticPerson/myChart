@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="800" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
+    <script>
+        var config = {
+            total:350,
+            value:110,
+            expect:210,
+            image:{
+                src:"tv-ga-icon3.png",
+                width:58,
+                height:36
+            },
+            splitNum:7
+        }
+        function drawChart(id,config) {
+            var imgSrc = "tv-ga-icon3.png";
+            var imgWidth = 58;
+            var imgHeight = 36;
+            var total = 350;
+            var value = 110;
+            var expectValue = 210;
+            var splitNum = 7;
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+
+            var width = Number(canvas.width);
+            var height = Number(canvas.height);
+            var useWidth = width - 100;
+            var scale = useWidth / 410;
+            var outWidth = useWidth;
+            var innerWidth = 270 * scale;
+            var tinyWidth = 110 * scale;
+            var littleWidth = 96 * scale;
+            var centerX = width / 2;
+            var centerY = height / 2;
+            var startAngle = Math.PI / 60 * 48;
+            var arcLength = Math.PI / 3 * 4;
+            var firstPartLength = arcLength * value / total;
+            context.beginPath();
+            context.lineWidth = (outWidth - innerWidth) / 2;
+            context.strokeStyle = "#3666C1";
+            console.log(outWidth - (outWidth - innerWidth) / 2);
+            console.log(outWidth - innerWidth);
+            context.arc(centerX, centerY, outWidth / 2 - (outWidth - innerWidth) / 4, startAngle, startAngle + firstPartLength + Math.PI / 30);
+            context.stroke();
+
+            context.beginPath();
+            context.lineWidth = (outWidth - innerWidth) / 2;
+            context.strokeStyle = "#BFBFBF";
+            context.arc(centerX, centerY, outWidth / 2 - (outWidth - innerWidth) / 4, startAngle + firstPartLength + Math.PI / 30, startAngle + arcLength + Math.PI / 15);
+            context.stroke();
+
+            context.beginPath();
+            context.lineWidth = (tinyWidth - littleWidth) / 2;
+            context.strokeStyle = "#3666C1";
+            context.arc(centerX, centerY, tinyWidth / 2 - (tinyWidth - littleWidth) / 4, 0, Math.PI * 2);
+            context.stroke();
+
+            console.log(scale);
+
+            var arcGap = Math.PI / 3 * 4 / (splitNum);
+            var startAngle1 = Math.PI + Math.PI / 3;
+            for (var i = 0; i < splitNum; i++) {
+                context.save();
+                context.lineWidth = 5 * scale;
+                context.strokeStyle = "#FFF";
+                context.translate(centerX, centerY);
+                context.rotate(arcGap * i + startAngle1);
+                context.beginPath();
+                context.moveTo(0, -outWidth / 2 + 30 * scale);
+                context.lineTo(0, -outWidth / 2 + 7 * scale);
+                context.stroke();
+                context.closePath();
+                context.restore();
+            }
+            var arcGap2 = Math.PI / 3 * 4 / (splitNum) / 5;
+            for (var i = 0; i < splitNum * 5 + 1; i++) {
+                context.save();
+                context.lineWidth = 3 * scale;
+                context.strokeStyle = "#FFF";
+                context.translate(centerX, centerY);
+                context.rotate(arcGap2 * i + startAngle1);
+                context.beginPath();
+                context.moveTo(0, -outWidth / 2 + 20 * scale);
+                context.lineTo(0, -outWidth / 2 + 7 * scale);
+                context.stroke();
+                context.closePath();
+                context.restore();
+            }
+
+            var gap = total / 7;
+            for (var i = 0; i < 8; i++) {
+                var angle = arcGap * i + startAngle1;
+                context.save();
+                context.fillStyle = "#FFF";
+                context.font = 20 * scale.toFixed(2) + "px serif";
+                context.textBaseline = "middle";
+                context.textAlign = 'center';
+                console.log(outWidth / 2 + 135 * Math.sin(angle), outWidth / 2 - 135 * Math.cos(angle));
+                context.fillText(parseInt(gap * i), centerX + 155 * scale * Math.sin(angle), centerY - 155 * scale * Math.cos(angle));
+                context.restore();
+            }
+
+            context.save();
+            context.translate(centerX, centerY);
+            context.rotate(Math.PI / 6 * 11 + Math.PI / 2 + Math.PI / 3 * 4 * value / total);
+            context.beginPath();
+            context.fillStyle = "#3666C1";
+            context.moveTo(0, 0);
+            context.lineTo(0, tinyWidth / 2 - (tinyWidth - littleWidth) / 4);
+            context.lineTo(-16 * scale, tinyWidth / 2 - (tinyWidth - littleWidth) / 4);
+            context.lineTo(0, tinyWidth / 2 - (tinyWidth - littleWidth) / 4 + 70 * scale);
+            context.lineTo(16 * scale, tinyWidth / 2 - (tinyWidth - littleWidth) / 4);
+            context.lineTo(0, tinyWidth / 2 - (tinyWidth - littleWidth) / 4);
+            context.fill();
+            context.restore();
+
+            context.save();
+            context.fillStyle = "#3666C1";
+            context.font = 50 * scale.toFixed(2) + "px serif";
+            context.textBaseline = "middle";
+            context.textAlign = 'center';
+            context.fillText(String(value), centerX, centerY);
+            context.restore();
+
+            var cAngle = startAngle + arcLength * expectValue / total + Math.PI / 30;
+            context.save();
+            context.beginPath();
+            context.translate(centerX, centerY);
+            context.rotate(cAngle - Math.PI / 2);
+            context.lineWidth = 26 * scale;
+            context.strokeStyle = "#F19900";
+            context.arc(0, outWidth / 2 + 26 * scale, 13 * scale, 0, Math.PI);
+            context.stroke();
+            context.restore();
+
+            context.save();
+            context.beginPath();
+            context.translate(centerX, centerY);
+            context.rotate(cAngle - Math.PI / 2);
+            context.fillStyle = "#F19900";
+            context.moveTo(0, outWidth / 2);
+            context.lineTo(-26 * scale, outWidth / 2 + 26 * scale + 1);
+            context.lineTo(26 * scale, outWidth / 2 + 26 * scale + 1);
+            context.lineTo(0, outWidth / 2);
+            context.fill();
+            context.restore();
+
+            context.save();
+
+            context.font = 25 * scale + "px serif";
+            context.fillStyle = "#FFF";
+            context.textBaseline = "middle";
+            context.textAlign = 'center';
+            console.log((outWidth / 2 + 26 * scale) * Math.sin(cAngle), (outWidth / 2 + 26 * scale) * Math.cos(cAngle));
+            context.fillText("标", centerX + (outWidth / 2 + 26 * scale) * Math.cos(cAngle), centerY + (outWidth / 2 + 26 * scale) * Math.sin(cAngle));
+            context.restore();
+
+            context.save();
+            var img = new Image();
+            img.onload = function () {
+                for (var i = 0; i < 4; i++) {
+                    for (var j = 0; j < 3; j++) {
+                        context.drawImage(img, centerX - imgWidth / 2, centerY + outWidth / 2 * Math.sin(Math.PI / 6), imgWidth, imgHeight);
+                    }
+                }
+            };
+            img.src = imgSrc;
+        }
+    </script>
+</body>
+</html>

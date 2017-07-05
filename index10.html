@@ -15,7 +15,8 @@
     context.strokeStyle = "#FFF";
     context.shadowColor = "#000";
     context.shadowBlur = 40;
-    context.arc(290,290,100,0,Math.PI*2);
+//    context.rotate(Math.PI);
+    context.arc(290,290,100,-Math.PI,Math.PI);
     context.stroke();
     context.restore();
 
@@ -27,17 +28,22 @@
     context.stroke();
     context.restore();
 
+    var angle = Math.PI/4*7;
     context.beginPath();
-    var gradient = context.createLinearGradient(90,90,490,490);
+    context.translate(290,290);
+    context.rotate(angle);
+    var gradient = context.createLinearGradient(-200,-200,200,200);
     gradient.addColorStop(0,"#009CFF");
     gradient.addColorStop(1,"#6DCA34");
     context.lineWidth=24;
     context.strokeStyle = gradient;
     context.shadowBlur = 0;
-    context.arc(290,290,130,0,Math.PI*2);
+    context.arc(0,0,130,0,Math.PI*2);
     context.stroke();
     context.restore();
 
+    context.rotate(-angle);
+    context.translate(-290,-290);
     for(var i=0;i<15;i++){
         context.save();
         context.lineWidth = 3;
