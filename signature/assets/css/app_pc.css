@@ -1,0 +1,198 @@
+body {
+  font-family: Microsoft Yahei, Hiragino Sans GB, arial, \5b8b\4f53, Helvetica Neue, Helvetica, STHeiTi, sans-serif;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+  -webkit-user-select: none;
+  -webkit-text-size-adjust: none;
+  font-size: 16px;
+}
+a {
+  color: #333;
+  text-decoration: none;
+}
+a:focus,
+a:hover {
+  color: #333;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  -webkit-border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  height: 50px;
+  -webkit-border-radius: 4px;
+  -webkit-transition: color .15s linear, background-color .15s linear .1s, border .35s linear;
+  -moz-transition: color .15s linear, background-color .15s linear .1s, border .35s linear;
+  transition: color .15s linear, background-color .15s linear .1s, border .35s linear;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #525252;
+  -webkit-border-radius: 0;
+}
+.tw-body {
+  background-color: #424242;
+}
+.tw-report-demo {
+  position: relative;
+}
+.tw-report-demo #loaing-icon {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  background: #000;
+  margin: auto;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  z-index: 1000;
+}
+.tw-report-demo #loaing-icon span {
+  color: #fff;
+  font-size: 36px;
+  line-height: 50px;
+  text-align: center;
+  font-weight: 100;
+}
+.tw-report-demo #loaing-icon .fa-spin {
+  -webkit-animation: fa-spin 1.3s infinite linear;
+  animation: fa-spin 1.3s infinite linear;
+}
+.tw-report-demo #loading-bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #424242;
+  z-index: 999;
+}
+/*scroll*/
+.scroll {
+  position: fixed;
+  right: 10px;
+  bottom: 20px;
+  z-index: 2;
+  width: 40px;
+}
+.scroll .btn-toolbar-edit,
+.scroll .btn-toolbar-edit2,
+.scroll .btn-changeMode,
+.scroll .btn-change-color{
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: none;
+  padding: 10px 11px;
+}
+.scroll .btn-toolbar-edit:hover,
+.scroll .btn-toolbar-edit2:hover,
+.scroll .btn-changeMode:hover,
+.scroll .btn-change-color:hover{
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.scroll .btn-toolbar-edit.btn-fa-lg {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.scroll .divider {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+.scroll button {
+  outline: 0 !important;
+}
+.hidden {
+  display: none;
+}
+.btn-actived{
+  background-color: #ccc!important;
+}
+.tw-rp-main {
+  padding: 30px 100px;
+  min-height: 1000px;
+}
+.tw-rp-main .wrap {
+  width: 100%;
+  min-height: 500px;
+  background: url(../img/theme4_bg.png) repeat;
+  position: relative;
+}
+.tw-rp-main .wrap .top {
+  position: absolute;
+  width: 100%;
+  height: 160px;
+  top: 0;
+  background: url(../img/theme4_top.png) repeat-x;
+}
+.tw-rp-main .wrap .content {
+  padding: 160px 0 30px 0;
+  margin: 0 30px;
+}
+.tw-rp-main .wrap .content .from-editor .tags {
+  color: #FF0000;
+}
+/*自定义数据表格*/
+.tw-rp-main .wrap .content .from-editor table.tw-dataTable {
+  border: none;
+  border-collapse: collapse;
+}
+.tw-rp-main .wrap .content .from-editor table.tw-dataTable th {
+  background: -moz-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(181, 209, 255, 0.34)), color-stop(100%, rgba(181, 209, 255, 0.34)));
+  background: -webkit-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: -o-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: -ms-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: linear-gradient(to bottom, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#57b5d1ff', endColorstr='#57b5d1ff', GradientType=0);
+}
+.tw-rp-main .wrap .content .from-editor table.tw-dataTable td,
+.tw-rp-main .wrap .content .from-editor table.tw-dataTable th {
+  border: 1px solid #999;
+  padding: 3px 5px;
+  min-width: 50px;
+  height: 20px;
+}
+.tw-rp-main .wrap .content .from-editor table.tw-dataTable tr:hover td {
+  background: -moz-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(181, 209, 255, 0.34)), color-stop(100%, rgba(181, 209, 255, 0.34)));
+  background: -webkit-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: -o-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: -ms-linear-gradient(top, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  background: linear-gradient(to bottom, rgba(181, 209, 255, 0.34) 0, rgba(181, 209, 255, 0.34) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#57b5d1ff', endColorstr='#57b5d1ff', GradientType=0);
+}
+.tw-rp-main .wrap .content .from-editor .chart-wrap {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+}
+.tw-rp-main .wrap .content .from-editor .chart-wrap .tool {
+  position: absolute;
+  right: 0;
+  top: -30px;
+  background: #e3e3e3;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 0 10px;
+}
+.tw-rp-main .wrap .content .from-editor .chart-wrap .tool .fa {
+  cursor: pointer;
+  opacity: 0.6;
+  -webkit-opacity: 0.6;
+}
+.tw-rp-main .wrap .content .from-editor .chart-wrap .tool .fa:hover {
+  opacity: 1;
+  -webkit-opacity: 1;
+}
+/*# sourceMappingURL=app_pc.css.map */

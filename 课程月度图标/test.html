@@ -1,0 +1,603 @@
+<!DOCTYPE HTML>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/common/header.jsp"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.*"%>
+<%@page import="cn.com.trueway.sso.SessionBomb"%>
+<%@page import="cn.com.trueway.util.SystemParamConfigUtil"%>
+<%@page import="cn.com.trueway.platform.util.Constant"%><html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="desciption" content="" />
+    <meta name="author" content="purecolor@foxmail.com" />
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome=1" />
+    <c:if test="${sessionScope.webId eq 'jyjx' }">
+        <title>南通市教育局政务协同平台</title>
+    </c:if>
+    <c:if test="${sessionScope.webId ne 'jyjx' }">
+        <title>南通市教育系统公文交换系统</title>
+    </c:if>
+
+    <link rel="stylesheet" href="cssbreeze/base.css" type="text/css" />
+    <link rel="stylesheet" href="cssbreeze/common.css" type="text/css" />
+    <link rel="stylesheet" href="${cdn_imgs}/ued.base.css" />
+    <link rel="stylesheet" href="${cdn_imgs}/mice/uibreeze.css" />
+    <link rel="stylesheet" type="text/css" href="widgets/ext-3.1.1/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="widgets/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="widgets/css/jstx.css" />
+    <link href="asstes/css/index.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="cssbreeze/index.css" type="text/css" />
+    <link rel="stylesheet" href="cssbreeze/style.css" type="text/css" />
+    <link rel="stylesheet" href="cssbreeze/style1.css" type="text/css" />
+    <link rel="stylesheet" href="cssbreeze/jw-jqm-cal.css" />
+    <link rel="stylesheet" href="cssbreeze/umeditor/css/umeditor.css" type="text/css"/>
+    <link rel="stylesheet" href="cssbreeze/jquery.mCustomScrollbar.css"/>
+    <script type="text/javascript" src="./jsbreeze/jquery-1.8.2.min.js"></script>
+
+    <script type="text/javascript" src="widgets/plugin/js/common/dialog/artDialog.js"></script>
+    <script type="text/javascript" src="widgets/plugin/js/common/dialog/plugins/iframeTools.js"></script>
+
+    <script type="text/javascript" src="${cdn_js}/sea.js"></script>
+    <style type="text/css">
+        .cornernum {
+            background:#f74c31;
+            border-radius:50%;
+            color:#FFF;
+            padding:0 5px;
+            display:inline-block;
+            margin-left:3px;
+        }
+    </style>
+    <!--[if IE 6]>
+    <script src="${cdn_js}/common/pnghack/iepngfix_tilebg.js"></script>
+    <style>
+        .png,#system-online a:hover{behavior: url("${cdn_js}/common/pnghack/iepngfix.htc");}
+    </style>
+    <![endif]-->
+    <script>
+
+        window.moveTo(0,0);
+        window.resizeTo(Math.max(window.screen.availWidth,window.screen.width),Math.min(window.screen.availHeight,window.screen.height));
+    </script>
+    <style type="text/css">
+
+
+        <c:forEach var="menu" items="${mainMenu}">
+        #guideList li .${menu.menuRole}{
+            background:url(./imagesbreeze/icons/${menu.menuicon});
+        }
+        #guideList li.hover .${menu.menuClass}{
+            background:url(./imagesbreeze/iconshover/${menu.menuicon});
+        }
+        </c:forEach>
+    </style>
+</head>
+<body>
+<div class="pass-reset">
+    <h3 class="form-title">
+        修改密码
+        <span class="close_form" id='close_form'>x</span>
+    </h3>
+    <div class="pass-form" id="res-box">
+        <iframe src="http://58.221.186.12:9681/webconsole/webConsole/attribute/User/modifyPasswd.jsp" id="pass_res" style="width: 100%;height: 100%;" frameborder="0" scrolling="no"></iframe>
+    </div>
+</div>
+<div id="header">
+    <c:if test="${sessionScope.webId eq 'jyjx' }">
+        <div class="font-logo"> 智慧政务协同系统 </div>
+    </c:if>
+    <c:if test="${sessionScope.webId ne 'jyjx' }">
+        <div class="font-logo2"> 智慧政务协同系统 </div>
+    </c:if>
+
+
+    <div class="fr">
+        <div class="userInfo" style="padding-top: 2px;">
+            <!-- 	<div class="Max">
+                    <a href="javascript:;" style="margin-left:10px;" onclick="changeMac();"></a>
+                </div> -->
+            <!-- 			    <div  onclick="changeMac();"><span style="color:#d2e2f1;">切换MAC</span></div> -->
+
+            <img src="imagesbreeze/head-icon.png" title="点击头像修改密码" width="55" height="55" alt="" class="fl"  onclick="toModifyPW();"/>
+
+            <div style="float:left; margin-right: 10px;"><div><p style="font-size:30px;margin-top: 8px;margin-bottom: 10px;color: #bdc5cb;">${sessionScope.userName}</p></div>
+
+                <div><p>上次登录：${lastLoginTM}</p></div></div>
+
+            <div class="loginOut">
+                <a href="javascript:;"  onclick="sysQuit();">退出</a>
+            </div>
+
+        </div>
+    </div>
+    <div id="headnavTab" class="tabsPageContainer" style="position:fixed;top:58px">
+
+        <div id="tabsPageHeaderHbox">
+            <div class="tabsPageScroll">
+                <span class="aquo fpl-left-more">&laquo;</span>
+                <div class="tabsPageHeaderHboxVm">
+                    <ul class="tabsPageHeader">
+                        <!-- <li class="" mice-e="hover">
+                            <div class="menu allmenu" style="width:96px;">
+                                <a href="javascript:void(0);" class="menu allmenu" style="background-image: none;"></a>
+                            </div>
+
+                        </li> -->
+                        <li tid="myhome" class="selected item" mice-e="hover">
+                            <div class="tab-l">
+                                <div class="tab-r">
+                                    <div class="tab-m" style="cursor: pointer;" <c:if test="${sessionScope.webId eq 'jyjx' }"> onclick="refresh();" </c:if>>
+                                    我的主页
+                                </div>
+                            </div>
+                </div>
+
+                </li>
+                </ul>
+            </div>
+            <span class="aquo fpl-right-more">&raquo;</span>
+        </div>
+
+    </div>
+</div>
+</div>
+<div id="mice-layout">
+    <div id="container" style="left: 0px; top: 0px">
+        <div id="navTab" class="tabsPageContainer">
+            <div class="tabsPageContent">
+                <div class="pages" style="position: relative;">
+                    <!-- <iframe width="100%" frameborder="0" scrolling="auto" style="overflow-x : hidden;" filltarget=".tabsPageContent"  src="oaportal.jsp"></iframe>
+
+                        <c:if test="${sessionScope.webId ne 'jyjx' }">
+                            <iframe width="100%" class="myFrame" id="myFrame" frameborder="0"  filltarget=".tabsPageContent"  name="myFrame" src="welcome.jsp"></iframe>
+                        </c:if>
+                        <c:if test="${sessionScope.webId eq 'jyjx' }">
+                         <iframe width="100%" class="myFrame" frameborder="0" id="myFrame"
+                        filltarget=".tabsPageContent" name="myFrame" src="index_tp.jsp"></iframe>							</c:if>
+                        <!-- <iframe width="100%" class="myFrame" frameborder="0"
+                        filltarget=".tabsPageContent" name="myFrame" src="welcomebreezetest.jsp"></iframe> -->
+                    <div class="col">
+                        <input type="hidden" value="${webInfo.webId}" id="webId">
+                        <input type="hidden" value="${sessionScope.userId}" id="userId">
+                        <div id="guideList2">
+                            <div id="subcontent2" style="display:block;">
+                                <div id="subContainer2" style="display:block;">
+                                    <ul style="display:block;">
+                                        <!--循环便利显示原先的树-->
+                                        <div id="mulu">
+                                            <c:forEach  var="menu" items="${mainMenu}" >
+                                                <div style="float:left ;  width:20%;  height:50%;">
+                                                    <li data-role="${menu.menuRole}">
+                                                        <span style="width: 82px;height: 74px;" class="${menu.menuClass}">${menu.menuName}</span>
+                                                        <!--图片绑定点击事件，进入下一级目录 -->
+                                                        <img src="asstes/img/jyj_2017_14.png" name="${menu.menuId}" onclick="newCatalog(this)">
+                                                    </li>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </ul>
+                                </div></div>
+                        </div></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>
+        Copyright ? trueway.com.cn
+    </p>
+</div>
+
+<!------------------------end--------------------------------------------->
+<div style="display:none;" id="twoMenu">
+    <div>
+
+        <div id="three">
+            <c:forEach  var="menu" items="${mainMenu}" >
+                <div id="${menu.menuId}">
+                    <c:forEach  var="submenu" items="${menu.subMenu}" >
+                        <div id="${submenu.menuId}">
+                            <c:forEach  var="tubmenu" items="${submenu.subMenu}" >
+                                <div style="float:left ;  width:20%;  height:50%;">
+                                    <li data-role="${menu.menuRole}">
+                                        <a way="iframe" target="navTab" rel="page-PARENTID"
+                                           aid="${tubmenu.menuId }" class="J_link"
+                                           title="${ tubmenu.menuName}" tname="${ tubmenu.menuName}"
+                                           tvalue="${tubmenu.menuId }" tdesc="${tubmenu.menuDesc }" href="${ tubmenu.menuURL}">
+                                            <span style="width: 82px;height: 74px;" >${tubmenu.menuName}</span>
+                                            <img src="asstes/img/jyj_2017_14.png" >
+                                        </a>
+                                    </li>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </c:forEach>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+    function changeMac(){
+        window.location.href="${ctx}/index_mac.jsp";
+    }
+    function refresh(){
+
+        // document.getElementById('myFrame').contentWindow.document.location="${ctx}/welcomebreezetest.jsp";
+
+        document.getElementById('myFrame').src="${ctx}/index_tp.jsp";
+        // document.frames("myFrame").document.location="welcomebreezetest.jsp";
+    }
+    function targetHref(){
+        window.document.getElementById('myFrame').src="${ctx}/index_tp.jsp";
+    }
+
+    function newCatalog(a) {
+        $("#mulu").empty();
+        var a2=document.getElementById(a.name).innerHTML;
+        $("#mulu").append(a2);
+
+    }
+    function newCatalog1(a) {
+        var a1=a.id;
+        if(a1) {
+            $("#mulu").empty();
+            var a2=document.getElementById(a.name).innerHTML;
+            $("#mulu").append(a2);
+            return false;
+        }
+        else {
+            return true;
+        }
+
+
+    }
+    $(function() {
+        //设置左侧可操作区域的高度
+        function setLeftZone() {
+            var win_H = $(window).height(),win_W = $(window).width();
+            var guideH = win_H-87-30;//87为头部的高度，30为底部的高度,如果文档高度大于window高度，就不需要减底部高度了
+            var allMenuW = win_W-100;//all menu div's width
+            $(".guidecontent").height(guideH);
+            var slideH = guideH - 30 - 30;//22为上下箭头的高度
+            $("#slidewrap").height(slideH);
+            $("#mice-layout").height(guideH);
+            $("#allmenu").height(guideH);
+            $("#allmenu").width(allMenuW);
+            $(".menuwrap").height(guideH);
+        }
+        setLeftZone();
+
+        $(".menuwrap").height($(window).height()-87-30-50);
+
+        $("#allmenu").addClass("none");
+
+        var hideSub = true;
+
+        $("#allmenu").hover(function(){
+            hideSub = false;
+        },function(){
+            hideSub = true;
+            setTimeout(function(){$("#allmenu").addClass("none");},200);
+        });
+        $("div.allmenu").hover(function(){
+            $("#allmenu").removeClass("none");
+            $(".menuwrap").mCustomScrollbar("update");
+        },function(){
+            setTimeout(function(){if(hideSub)$("#allmenu").addClass("none");},200);
+        });
+
+        //窗体变化时，重新计算左侧宽度
+        $(window).resize(function() {
+            setLeftZone();
+            $(".menuwrap").height($(window).height()-87-30-50);
+        });
+
+        seajs.use('lib/extend', function(navtab) {
+            navtab.init();
+            $("#guideList").nav("#subcontent").init("#subContainer");
+            $("#guideList2").nav("#subcontent2").init("#subContainer2");
+        });
+
+        seajs.use('mCustomScrollbar',function(){
+            $(".menuwrap").mCustomScrollbar({
+                autoHideScrollbar:true
+                //theme:"light-thin"
+            });
+        });
+        seajs.use('micebreeze',function(Mice){
+            Mice.init();
+
+            //Hover事件
+            $('*[mice-e="hover"]').live('mouseover',function(){
+                $(this).addClass('hover');
+            }).live('mouseout',function(){
+                $(this).removeClass('hover');
+            });
+            seajs.use('common/common',function(){
+                showTime('.system-time','');
+            });
+        });
+        /* seajs.use('common/dialog/artDialog.js',function(){
+         });
+         seajs.use('common/dialog/plugins/iframeTools.source.js',function(){
+         }); */
+
+
+        function scrollFunc(e){
+            e=e || window.event;
+            if('-120'==e.wheelDelta){
+                $(".downarrow").click();
+            }else{
+                $(".uparrow").click();
+            }
+        }
+        /* function scrollFunc(e){
+         alert('qqqqqqqqqqqqqqq');
+         }
+         $("#guideList").mouseover(function(){
+         window.onmousewheel=document.onmousewheel=scrollFunc;
+         }); */
+
+
+    });
+    //退出系统
+    function sysQuit(){
+        if(confirm("是否确认退出?"))
+        {
+            var functionurl ="<%=SystemParamConfigUtil.getParamValueByParam("functionsurl")%>";
+            var workflowurl ="<%=SystemParamConfigUtil.getParamValueByParam("workflowurl")%>";
+            var urll=functionurl+"/bbs/bbs_clearSession.do";
+            //alert(urll);
+            /*清除 functions session*/
+            $.ajax({
+                type: "POST",
+                url: urll,
+                success: function (mes){
+                    //  alert("finctions success!");
+                }
+            });
+
+            /*清除 rm session*/
+            $.ajax({
+                type: "POST",
+                url: "${ctx}/bz_clearSession.do",
+                success: function (mes){
+                    //  alert("rm success!");
+                }
+            });
+
+            window.location =  "<%=SystemParamConfigUtil.getParamValueByParam("Logout")%>";
+        }
+
+    }
+    function toModifyPW() {
+        $(".pass-reset").fadeIn();
+        $(".sure-btn").click(function(){
+            $(".pass-reset").fadeOut();
+        })
+        $(".cancel_btn").click(function(){
+            $(".pass-reset").fadeOut();
+        })
+        $(".close_form").click(function(){
+            $(".pass-reset").fadeOut();
+        })
+    }
+</script>
+<script type="text/javascript">
+    $(function() {
+
+
+        //add scrollbar effect
+        $(".fastcon").mCustomScrollbar({
+            autoHideScrollbar : true,
+            theme : "light-thin"
+        });
+
+        var slidewrap_w = 0;
+
+
+        //动态设置左列的宽度
+        function setLeftColWidth() {
+            var win_p = $(window).parent().width();
+            var win_w = $(window).width(), //window的宽度
+                left_space_width = parseInt($(".container").css("paddingLeft"),10),
+                right_space_width = parseInt($(".container").css("paddingRight"),10);
+            var right_col_width = 409;//右列的宽度是固定的（元素宽度+padding）
+            var father_border = 2;//外层2像素边框（左右边框）
+            var left_static_space = 21 + 1;//左侧padding（21）和1像素右边框是固定的。
+            var left_width = win_w - left_space_width - right_space_width - right_col_width - father_border - left_static_space;
+            //$(".item-col1").css("width", "25%");//设置左侧的宽度
+            slidewrap_w = left_width - 32;
+
+        }
+
+        setLeftColWidth();
+
+        //绑定滑动
+        var sd = $(".db_slide_wrap").Slide({
+            width : slidewrap_w
+        });
+
+        //窗体变化时，重新计算左侧宽度
+        $(window).resize(function() {
+            setLeftColWidth();
+            sd.refresh({
+                "width" : slidewrap_w
+            });
+        });
+
+        $("#showall").click();
+    });
+
+
+    function refresh(){
+        window.location.reload();
+    }
+
+    function showHistatory(day){
+        var date = ($(".previous-btn").next().html());
+        var year=date.split("/")[1];
+        var month=date.split("/")[0];
+        var timetype=(year+"-"+month+"-"+day);
+        havedone(timetype);
+    }
+</script>
+<script>
+    $('.tabsPageHeaderHboxVm').css('width', ($(document.body).width() - 98 - 40) + "px");
+    var prev = $("#prev");
+    var next = $("#next");
+    var iNow = 0;
+    var len;
+    var MyIframe = '/ts/employee_getContainer.do';
+    function testlen() {
+        len = $('.tablist li').length;
+        iNow == 0 ? prev.addClass('no_click') : prev
+            .removeClass('no_click');
+        iNow >= len - 5 ? next.addClass("no_click") : next
+            .removeClass("no_click");
+        //alert($('.tab').width()+"|||"+$('.tablist').width());
+    }
+    testlen();
+    prev.click(function() {
+        if (iNow > 0) {
+            iNow--;
+        }
+        ClickScroll();
+    })
+    next.click(function() {
+        if (iNow < len - 5) {
+            iNow++;
+        }
+        ClickScroll();
+    })
+
+    function ClickScroll() {
+        testlen();
+        var loca = 0;
+        var js = 0
+        $(".tablist li").each(function() {
+            if (js < iNow) {
+                loca += $(this).width() + 2;
+                js++;
+            }
+        })
+        $('.tablist').animate({
+            left : 0 - loca
+        })
+    }
+
+    function stab(t, u) {
+        u = unescape(u);
+        var js = 0;
+        var f = 0
+        $('.tablist').find('li').each(function() {
+            $(this).removeClass("tabon");
+            if ($.trim($(this).text()) == t) {
+                $(this).addClass("tabon");
+                f = js;
+            }
+            js++;
+        });
+        $('#Mcontainer', parent.document.body).attr("src", u);
+        MyIframe = u;
+        if ((f - iNow) > 5) {
+            iNow = f - 5;
+            ClickScroll();
+        }
+        //if ((js-iNow)>5&&iNow<=f){iNow=js-5;ClickScroll();}
+        if (iNow > f) {
+            iNow = f;
+            ClickScroll();
+        }
+        testlen();
+    }
+    function ctab(t, u) {
+        u = unescape(u);
+        var js = 0;
+        var mt = 0;
+        $('.tablist').find('li').each(function() {
+            if ($.trim($(this).text()) == t) {
+                $(this).remove();
+                mt = js - 1;
+            }
+            js++;
+        });
+        if ($('#Mcontainer', parent.document.body).attr("src") == u) {
+            $(".tablist").find("b:eq(" + mt + ")").trigger("click");
+        }
+
+        testlen();
+
+    }
+    //页面打开控制
+    //isn 是否打开新的页面
+    //isa 是否使用绝对路径
+    function atab(t, u, isn, isa) {
+        if (isa == 0) {
+            u = "/ts/" + u;
+        }
+        u = escape(convertURL(u));
+        //u = escape(u);//去除特殊字符
+        var flag = 0;
+        $('.tablist').find('li').each(function() {
+            if ($.trim($(this).text()) == t) {
+                flag = 1;
+            }
+        });
+        if (isn == 0) {
+            if (flag == 0) {
+                var str;
+                str = '        <li>';
+                str += '            <div class="tab-l">';
+                str += '                <div class="tab-r">';
+                str += '                    <div class="tab-m">';
+                str += '                        <b onclick=javacript:stab("'
+                    + t + '","' + u + '");>' + t + '</b>';
+                str += '                        <i onclick=javacript:ctab("'
+                    + t + '","' + u + '"); class="tab-close"></i>';
+                str += '                   </div>';
+                str += '                </div>';
+                str += '            </div>';
+                str += '        </li>';
+                $('.tablist').append(str);
+            }
+            stab(t, u);
+        } else if (isn == 1) {
+            u = unescape(u);
+            topOpenLayerTabs(parseInt(Math.random()*100+1),1200,600,t,u)
+        }
+    }
+
+    function convertURL(url){
+        var timstamp = new Date().getTime();
+        if (url.indexOf("_t=") == -1){
+            url = $.trim(url);
+            if (url.indexOf("?") >= 0){
+                url += "&_t=" + timstamp;
+            }else{
+                url += "?_t=" + timstamp;
+            }
+        }else{
+            url = $.trim(url);
+            url = url.substring(0,url.lastIndexOf("_t="))+"_t=" + timstamp;
+        }
+        return url;
+    }
+
+    function rf() {
+        $('#Mcontainer', parent.document.body).height(
+            $('#Mcontainer', parent.document.body).contents().find(
+                "body").attr('scrollHeight'));
+    }
+
+</script>
+</body>
+</html>

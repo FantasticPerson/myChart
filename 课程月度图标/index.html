@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="echarts-all-3.js"></script>
+</head>
+<body>
+    <div class="head">
+        <p class="title">英语课程阅读报告(2017年7月)</p>
+    </div>
+    <div class="body">
+        <div class="left">
+            <div class="icon-container">
+                <img src="icon.jpeg">
+            </div>
+            <div class="content">
+                <div class="content-item">
+                    <p>授课老师</p>
+                    <p>:</p>
+                    <p>杨平</p>
+                </div>
+                <div class="content-item">
+                    <p>学年学期</p>
+                    <p>:</p>
+                    <p>2016-2017第二学期</p>
+                </div>
+                <div class="content-item">
+                    <p>课程名称</p>
+                    <p>:</p>
+                    <p>大学英语课程</p>
+                </div>
+                <div class="content-item">
+                    <p>课程代码</p>
+                    <p>:</p>
+                    <p>00058</p>
+                </div>
+                <div class="content-item">
+                    <p>周次</p>
+                    <p>:</p>
+                    <p>4</p>
+                </div>
+                <div class="content-item">
+                    <p>课时数</p>
+                    <p>:</p>
+                    <p>60</p>
+                </div>
+            </div>
+            <div class="badge">
+                <div class="badge-item">
+                    <div></div>
+                    <p>1</p>
+                    <p>专业排名</p>
+                </div><!--
+                --><div class="badge-item">
+                    <div></div>
+                    <p>12</p>
+                    <p>院线排名</p>
+                </div><!--
+                --><div class="badge-item">
+                    <div></div>
+                    <p>30</p>
+                    <p>学校排名</p>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="canvasContainer">
+                <div class="canvasItem">
+                    <canvas id="canvas" width="160" height="160"></canvas>
+                    <span>课时完成情况</span>
+                </div><!--
+                --><div class="canvasItem">
+                    <canvas id="canvas1" width="160" height="160"></canvas>
+                    <span>综合得分</span>
+                </div><!--
+                --><div class="canvasItem">
+                    <canvas id="canvas2" width="160" height="160"></canvas>
+                    <span>授课计划执行(符合度)</span>
+                </div><!--
+                --><div class="canvasItem">
+                    <canvas id="canvas3" width="160" height="160"></canvas>
+                    <span>血液成绩(及格度)</span>
+                </div>
+            </div>
+            <div class="canvasContainer-2">
+                <div class="canvasContainer-2-left">
+                    <div class="report-item report-item-1">
+                        <p>教学日志</p>
+                        <div>
+                            <span>填报：</span>
+                            <span>20次</span>
+                        </div>
+                        <div>
+                            <span>占比：</span><!--
+                            --><canvas id="canvas6" width="168" height="24"></canvas>
+                        </div>
+
+                    </div>
+                    <div class="report-item report-item-2">
+                        <p>调停课</p>
+                        <div>
+                            <span>次数：</span>
+                            <span>5次</span>
+                        </div>
+                        <div>
+                            <span>占比：</span><!--
+                            --><canvas id="canvas7" width="178" height="24"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvasContainer-2-right">
+                    <div class="report-canvas-item report-canvas-item-1">
+                        <span>支持资料(完整度)</span>
+                        <canvas id="canvas4" width="136" height="136"></canvas>
+                    </div><!--
+                    --><div class="report-canvas-item report-canvas-item-2">
+                        <span>上课考勤</span>
+                        <canvas id="canvas5" width="136" height="136"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="canvasContainer-3">
+                <div class="canvas-c-3-item canvas-c-3-item-1">
+                    <p>课堂评价</p>
+                    <canvas id="canvas9" width="540" height="280"></canvas>
+                </div><!--
+                --><div class="canvas-c-3-item canvas-c-3-item-2">
+                    <p>作业布置</p>
+                    <div class="title-container">
+                        <div>
+                            <span></span>
+                            <span>频度:</span>
+                            <span>80%</span>
+                        </div>
+                        <div>
+                            <span></span>
+                            <span>批阅率:</span>
+                            <span>60%</span>
+                        </div>
+                    </div>
+                    <canvas id="canvas8" width="180" height="180" style="display: block;margin-top: 30px;margin-left: 30px"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var option = {
+            bgColor:'#7C724C',
+            foreColor:'#E6C12F',
+            percent:90,
+            showPercent:true
+        };
+        var draw1 = new drawCircle('canvas',option);
+        draw1.draw();
+
+        var option1 = {
+            bgColor:'#216F98',
+            foreColor:'#3CA9E2',
+            percent:90,
+            showPercent:false
+        };
+        var draw2 = new drawCircle('canvas1',option1);
+        draw2.draw();
+
+        var option2 = {
+            bgColor:'#565476',
+            foreColor:'#AB6FAD',
+            percent:100,
+            showPercent:true
+        };
+        var draw3 = new drawCircle('canvas2',option2);
+        draw3.draw();
+
+        var option3 = {
+            bgColor:'#4F8180',
+            foreColor:'#54AAA9',
+            percent:90,
+            showPercent:true
+        };
+        var draw4 = new drawCircle('canvas3',option3);
+        draw4.draw();
+
+        var option4 ={
+            bgColor:'#425A74',
+            foreColor:'#1CCBA2',
+            percent:80,
+            showPercent:true
+        };
+        var draw5 = new drawCircle2('canvas4',option4);
+        draw5.draw();
+
+        var option5 = {
+            bgColor:'#425A74',
+            foreColor:'#1787DB',
+            percent:90,
+            showPercent:true
+        };
+        var draw6 = new drawCircle2('canvas5',option5);
+        draw6.draw();
+
+        var option6={
+            bgColor:'#2D5B7D',
+            foreColor:'#1787DB',
+            percent:90,
+            showPercent:true
+        }
+        var draw7 = new progressBar('canvas6',option6);
+        draw7.draw();
+
+        var option7={
+            bgColor:'#3A665C',
+            foreColor:'#1CCBA2',
+            percent:5,
+            showPercent:true
+        }
+        var draw8 = new progressBar('canvas7',option7);
+        draw8.draw();
+
+        var option8={
+            bgColor:'#425A74',
+            foreColor1:'#1CCBA2',
+            foreColor2:'#1885D8',
+            percent1:80,
+            percent2:60,
+            title1:'',
+            title2:'',
+            textColor:'#9DC1E9',
+            showPercent:true
+        }
+        var draw9 = new drawDoubleCircle('canvas8',option8);
+        draw9.draw();
+
+        var chart1 = echarts.init(document.getElementById('canvas9'));
+        var option9 = {
+            color: ['#2292f1','#78c53a'],
+            tooltip : {
+                show: true,
+                trigger: 'axis',
+                axisPointer : {
+                    type : 'shadow'
+                }
+            },
+            legend: {
+
+                right:'3%',
+                textStyle: {color: '#fff',fontSize:16},
+                data: ['学生评价','督导评价']
+            },
+            grid: {
+                left: 50,
+                right: 50,
+                height: '70%',
+                width:'80%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['课时1','课时2','课时3','课时4','课时5','课时6','课时7','课时8'],
+                    axisTick: {
+                        show: false,
+                        alignWithLabel: true
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle:{
+                            color:'#055c94',
+                            width:1,
+                        }
+                    },
+                    axisLabel: {
+                        interval:0,
+                        rotate: 70,
+                        textStyle : {
+                            color : '#8BADD2',
+                            fontSize:16
+                        }
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    nameLocation: 'end',
+                    nameTextStyle:{
+                        color: '#333'
+                    },
+                    axisLabel: {
+                        margin: 5,
+                        textStyle : {
+                            color : '#8BADD2',
+                            fontSize:16
+                        }
+                    },
+                    axisTick: {
+                        show: false,
+                        alignWithLabel: true
+                    },
+                    splitLine: {
+                        show:false
+                    },
+                    axisLine: {
+                        lineStyle:{
+                            color:'#055c94',
+                            width: 1,
+                        }
+                    }
+                }
+            ],
+            series : [
+                {
+                    name:'学生评价',
+                    type:'line',
+                    barMaxWidth: 30,
+                    data: [Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5]
+                },
+                {
+                    name:'督导评价',
+                    type:'line',
+                    barMaxWidth: 30,
+                    data: [Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5,Math.random()*5]
+                }
+            ]
+        };
+        chart1.setOption(option9);
+    </script>
+</body>
+</html>
