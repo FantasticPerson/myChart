@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>南京交通拥堵指数</title>
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="assets/css/touch.css">
+    <!-- <script src="assets/js/zepto.min.js"></script> -->
+    <script src="assets/js/jquery-2.1.4.min.js"></script>
+    <!-- <script src="assets/js/highcharts.js"></script> -->
+    <script src="assets/js/highstock.js"></script>
+    <!-- <script src="assets/js/touch.min.js"></script> -->
+    <style type="text/css">
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .flex-row{
+            width:100%;
+            display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox;      /* TWEENER - IE 10 */
+            display: -webkit-flex;     /* NEW - Chrome */
+            display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+        }
+        .flex-row-item-z5{
+            -webkit-box-flex: 0.5;
+            -webkit-flex: 0.5;
+            flex: 0.5;
+        }
+        .flex-row-item{
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+        .citys .city-item{
+            cursor: pointer;
+            /*width: 23%;*/
+            margin: 0 1%;
+            border-width: 2px;
+            position: relative;
+        }
+        .citys .city-item i{
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0px;
+            left: 0px;
+            /*margin-left: -8px;*/
+            border: 1px solid #cccccc;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 120%;
+        }
+        .citys .city-item .num{
+            font-size: 1.5rem;
+        }
+        .citys .city-item .name{
+            font-size: 1.2rem;
+        }
+        .disable{
+            background-color: #efefef !important;
+        }
+        #chart_1{
+            width: 100%;
+            overflow: scroll;
+            background: url(assets/img/chart-bg.png) no-repeat 0 0;
+            background-size: auto 170px;
+        }
+        .chartbox{
+            width: 100%;
+            overflow: scroll;
+            background:#263434 url(assets/img/chart-bg-area.png) repeat-x 0 0;
+            background-size: auto 105px;
+        }
+
+        .city-nanjing .name{
+            height: 2.4rem;
+            line-height: 2.4rem;
+            top: 50%;
+            margin-top: -2rem;
+            font-size: 1rem;
+        }
+        .city-nanjing .name b{
+            font-size: 2.4rem;
+        }
+        .city-nanjing .time{
+            top:50%;
+            left: 2rem;
+            font-size: 1.5rem;
+        }
+        .city-nanjing .index .num{
+            font-size: 2rem;
+        }
+        .hd .time{
+            margin-left: 5px;
+        }
+        .citys{
+            margin-bottom: 10px;
+        }
+        .charttimer{
+            padding: 5px;
+            background-color: rgba(0,0,0,0.2);
+        }
+        .charttimer span.active {
+            color: #ffffff;
+            background-color: rgba(255,255,255,0.4);
+        }
+        .charttimer span:first-child {
+            border-radius: 5px 0 0 5px;
+            border-right-width: 0;
+        }
+        .charttimer span:last-child {
+            border-radius: 0 5px 5px 0;
+            border-left-width: 0;
+        }
+        .charttimer span {
+            flex: 1;
+            text-align: center;
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: #efefef;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .city-nanjing{
+            height: auto;
+        }
+        #NJ_MAIN{
+            height: 100px;
+            position: relative;
+        }
+        .area-item .JS_num {
+            position: relative;
+        }
+        .area-item .JS_num i{
+            font-size: 0.6rem;
+            line-height: 100%;
+            position: absolute;
+            width: 4rem;
+            right: 3px;
+            text-align: right;
+            bottom: 2px;
+        }
+        .hd .JS_num{
+            line-height: 40px;
+        }
+        .city-nanjing .index .num.numfu1{
+            font-size: 1.2rem;
+            line-height: 4.1875rem;
+        }
+        .citys .city-item.city-item266000 {
+            border-color: #e553b6;
+        }
+        .citys .city-item.city-item518000 {
+            border-color: #bedd41;
+        }
+    </style>
+    <script type="text/javascript">
+        /**
+         * 对Date的扩展，将 Date 转化为指定格式的String
+         * 月(M)、日(d)、12小时(h)、24小时(H)、分(m)、秒(s)、周(E)、季度(q) 可以用 1-2 个占位符
+         * 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+         * eg:
+         * (new Date()).pattern("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+         * (new Date()).pattern("yyyy-MM-dd E HH:mm:ss") ==> 2009-03-10 二 20:09:04
+         * (new Date()).pattern("yyyy-MM-dd EE hh:mm:ss") ==> 2009-03-10 周二 08:09:04
+         * (new Date()).pattern("yyyy-MM-dd EEE hh:mm:ss") ==> 2009-03-10 星期二 08:09:04
+         * (new Date()).pattern("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
+         */
+        Date.prototype.pattern = function(fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时
+                "H+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            var week = {
+                "0": "\u65e5",
+                "1": "\u4e00",
+                "2": "\u4e8c",
+                "3": "\u4e09",
+                "4": "\u56db",
+                "5": "\u4e94",
+                "6": "\u516d"
+            };
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            if (/(E+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "星期" : "") : "") + week[this.getDay() + ""]);
+            }
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
+        }
+
+        var gl_fix_data = {};
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="JS_nanjing JS_areaColor city-nanjing">
+        <div id="NJ_MAIN"></div>
+        <div class="charttimer flex-row">
+            <span data-ctt="0" class="charttimer-item flex-row-item">每15分钟</span>
+            <span data-ctt="1" class="charttimer-item flex-row-item active">每小时</span>
+            <span data-ctt="2" class="charttimer-item flex-row-item">每天</span>
+        </div>
+    </div>
+
+
+
+    <div class="JS_cityAreaAll city-charts" data-areaCode='1' >
+        <div id="chart_1"></div>
+    </div>
+
+    <div class="JS_city citys flex-row">
+
+    </div>
+
+    <div class="city-title">
+        <i></i> 南京分区域指数
+    </div>
+
+    <div class="JS_area area-list">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var screenWidth=$(window).width();
+    var __ctt=1,__st=1;//0:m,1:h,2:d
+    var __cache={};
+    var __SeriesCache__={
+        0:{}
+        ,1:{}
+        ,2:{}
+    };
+    var dataBJColor = '#399ee6',
+        dataQDColor = '#e553b6',
+        dataHZColor = '#f99e29',
+        dataSZColor = '#bddd3e';
+
+    $(function () {
+        var className , levelColor,allSeries,allAreaChart;
+
+        var dataUrl = "http://58.213.141.220:8989/njjtindex/?callback=?";
+        var dayUrl="http://58.213.141.220:8989/njjtindex/day/?callback=?";
+
+        var remotedataUrl = dataUrl;//'http://app.trueway.com.cn/mynj/?callback=?';
+
+        var areaUrl = 'http://58.213.141.220:8989/njjtindex/?callback=?&area=';
+        var remoteareaUrl = areaUrl;//'http://app.trueway.com.cn/mynj/?callback=?&area=';
+
+        var dictArea = [301,302,2138698,2139790,2139809,2139830,2140011];
+        var dictCity = [100000,518000,310000,266000];
+        var AreaDic = {
+            1       :'南京',
+            301     :'内环',
+            302     :'外环',
+            2138698 :'玄武区',
+            2139790 :'鼓楼区',
+            2139809 :'建邺区',
+            2139830 :'雨花台区',
+            2140011 :'秦淮区',
+            100000  :'北京',
+            518000  :'深圳',
+            310000  :'杭州',
+            266000  :'青岛'
+        };
+
+        getJSONData(remotedataUrl,dataUrl,AllAreaCallback);
+        getJSONData(dayUrl,dayUrl,function(data){
+            if(data.Error==null){
+                var areaColor='#068B5C';
+                var dayData=data.Data.reverse();
+                var nowColor={},
+                    nowIndex={
+                        1:[],
+                        301:[],
+                        2138698:[],
+                        2139790:[],
+                        2139809:[],
+                        2139830:[],
+                        2140011:[],
+                        100000:[],
+                        518000:[],
+                        310000:[],
+                        266000:[]
+                    },
+                    nowTime=[];
+                var last=dayData.length-1;
+                dayData.forEach(function(e,i){
+                    nowTime.push(e.Day.substr(5,5));
+                    nowIndex[1].push({
+                        color: judgeLevel(e.NJIndex),
+                        y: e.NJIndex<0?null:e.NJIndex
+                        ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-1.png)'}:null
+                    });
+                    nowIndex[301].push({
+                        color: judgeLevel(e.NHIndex),
+                        y: e.NHIndex<0?null:e.NHIndex
+                    });
+                    nowIndex[2138698].push({
+                        color: judgeLevel(e.XWIndex),
+                        y: e.XWIndex<0?null:e.XWIndex
+                    });
+                    nowIndex[2139790].push({
+                        color: judgeLevel(e.GLIndex),
+                        y: e.GLIndex<0?null:e.GLIndex
+                    });
+                    nowIndex[2139809].push({
+                        color: judgeLevel(e.JYIndex),
+                        y: e.JYIndex<0?null:e.JYIndex
+                    });
+                    nowIndex[2139830].push({
+                        color: judgeLevel(e.YHTIndex),
+                        y: e.YHTIndex<0?null:e.YHTIndex
+                    });
+                    nowIndex[2140011].push({
+                        color: judgeLevel(e.QHIndex),
+                        y: e.QHIndex<0?null:e.QHIndex
+                    });
+                    nowIndex[100000].push({
+                        color: judgeLevel(e.BJIndex),
+                        y: e.BJIndex<0?null:e.BJIndex
+                        ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-2.png)'}:null
+                    });
+                    nowIndex[266000].push({
+                        color: judgeLevel(e.QDIndex),
+                        y: e.QDIndex<0?null:e.QDIndex
+                        ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-3.png)'}:null
+                    });
+                    nowIndex[518000].push({
+                        color: judgeLevel(e.SZIndex),
+                        y: e.SZIndex<0?null:e.SZIndex
+                        ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-4.png)'}:null
+                    });
+                    nowIndex[310000].push({
+                        color: judgeLevel(e.HZIndex),
+                        y: e.HZIndex<0?null:e.HZIndex
+                        ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-5.png)'}:null
+                    });
+                });
+                var allSeries=[{
+                    name: '交通拥堵指数',
+                    color: nowColor[1],
+                    data: nowIndex[1]
+                    ,marker:markerStyle
+                },
+                    {
+                        name: '北京交通拥堵指数',
+                        color: dataBJColor,
+                        data: nowIndex[100000]
+                        ,marker:markerStyle
+                    },
+                    {
+                        name: '青岛交通拥堵指数',
+                        color: dataQDColor,
+                        data: nowIndex[266000]
+                        ,marker:markerStyle
+                    },
+                    {
+                        name: '深圳交通拥堵指数',
+                        color: dataSZColor,
+                        data: nowIndex[518000]
+                        ,marker:markerStyle
+                    },
+                    {
+                        name: '杭州交通拥堵指数',
+                        color: dataHZColor,
+                        data: nowIndex[310000]
+                        ,marker:markerStyle
+                    }];
+                __SeriesCache__[2][1]={
+                    color:areaColor,
+                    time:nowTime,
+                    data:allSeries
+                };
+                __SeriesCache__[2][301]={
+                    color:areaColor,
+                    time:nowTime,
+                    data:nowIndex[301]
+                };
+                __SeriesCache__[2][2138698]={
+                    color:areaColor,
+                    time:nowTime,
+                    data:nowIndex[2138698]
+                };
+                __SeriesCache__[2][2139790]={
+                    color:areaColor,
+                    time:nowTime,
+                    data:nowIndex[2139790]
+                };
+                __SeriesCache__[2][2139809]={
+                    color:areaColor,
+                    time:nowTime,
+                    data:nowIndex[2139809]
+                };
+                __SeriesCache__[2][2139830]={
+                    color:areaColor,
+                    time:nowTime,
+                    data:nowIndex[2139830]
+                };
+                __SeriesCache__[2][2140011]={
+                    color:areaColor,
+                    time:nowTime,
+                    data:nowIndex[2140011]
+                };
+            }
+        });
+
+        $(document).on('click','.city-item',function(){
+            //添加-1判断
+            var temp = $(this).find('.JS_num').text();
+            if(temp=='-'){
+                return false;
+            }
+
+            var disable=$(this).hasClass('disable');
+            if(disable==true){
+                $(this).removeClass('disable');
+            }else{
+                $(this).addClass('disable');
+            }
+            updateAllAreaChart();
+        });
+
+        function getJSONData(url,url2,callback){
+            $.ajax({
+                type: "get",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url: url,  //这里是网址
+                success: function (json) {
+                    callback(json)
+                },
+                timeout: 1000,
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    getJSONData(url2,'',callback);
+                }
+            });
+        }
+        function updateAllAreaChart(){
+            $('.city-item').each(function(i){
+                if(allAreaChart.series[i+1]==undefined) return;
+                var disable=$(this).hasClass('disable');
+                if(disable==false){
+                    allAreaChart.series[i+1].show();
+                }else{
+                    allAreaChart.series[i+1].hide();
+                }
+            });
+        }
+
+        function fixedFuNum(areaData){
+            areaData.Data.reverse();
+            var returno = {};
+            $.each(areaData.Data, function(i,e) {
+                var temp = true;
+                for(var key in e){
+                    if(e[key]<0){
+                        temp = false;
+                    }
+                }
+                if(temp){
+                    returno = areaData.Data[i];
+                    return returno;
+                }
+            });
+            return returno;
+        }
+
+        function AllAreaCallback(json){
+            var adc;
+            // 各城市对比
+            $(".JS_cityAreaAll").each(function(m,k){
+                var areaCode = $(this).attr('data-areaCode');
+                adc = areaCode;
+                var dataNJColor = $(".JS_nanjing").attr('data-areaColor');
+                getJSONData(remoteareaUrl+areaCode,areaUrl+areaCode,function(areaData){
+                    AreaMainCallback(areaCode,areaData,dataNJColor);
+                });
+            });
+            getJSONData(remoteareaUrl+adc, areaUrl+adc,function(r){
+                gl_fix_data = fixedFuNum(r);
+                var htmlNJ = '',
+                    htmlArea = '',
+                    htmlCity = '';
+                json.Data.sort(function(a,b){
+                    return a.Areacode-b.Areacode
+                });
+                // 循环各区
+                for(var i = 0,l=json.Data.length; i < l; i++){
+                    //console.log(gl_fix_data);
+                    if(json.Data[i].Index<0 && json.Data[i].Areacode=='1'){
+                        json.Data[i].Index = gl_fix_data.Index;
+                    }
+                    // 南京全区
+                    if(parseInt(json.Data[i].Areacode) == 1){
+                        htmlNJ = '<p class="name"><b>'+ json.Data[i].Areaname +'</b>（主城区）</p><span class="time">'+ json.Data[i].Time +'</span><div class="index"><span class="JS_num num">'+ (json.Data[i].Index) +'</span><span id="">'+num2text(json.Data[i].Index)+'</span></div>';
+
+                        // 其他城市
+                        //添加-1判断
+                        var temp = '';
+                        temp = json.Data[i].BJIndex<0?'-':json.Data[i].BJIndex;
+                        //              htmlCity += '<div id="city-bj" data-idx="1" class="disable city-item city-item100000"><span class="JS_num num">'+ json.Data[i].BJIndex +'</span><span class="name">北京</span><i>2</i></div>';
+                        htmlCity += '<div id="city-bj" data-idx="1" class="disable city-item flex-row-item city-item100000"><span class="JS_num num">'+ temp +'</span><span class="name">北京</span><i>2</i></div>';
+
+                        temp = json.Data[i].QDIndex<0?'-':json.Data[i].QDIndex;
+                        //              htmlCity += '<div id="city-qd" data-idx="4" class="disable city-item city-item266000"><span class="JS_num num">'+ json.Data[i].QDIndex +'</span><span class="name">青岛</span><i>3</i></div>';
+                        htmlCity += '<div id="city-qd" data-idx="2" class="disable city-item flex-row-item city-item266000"><span class="JS_num num">'+ temp +'</span><span class="name">青岛</span><i>3</i></div>';
+
+                        temp = json.Data[i].SZIndex<0?'-':json.Data[i].SZIndex;
+                        htmlCity += '<div id="city-sz" data-idx="3" class="disable city-item flex-row-item city-item518000"><span class="JS_num num">'+ temp +'</span><span class="name">深圳</span><i>4</i></div>';
+                        //              htmlCity += '<div id="city-sz" data-idx="2" class="disable city-item city-item518000"><span class="JS_num num">'+ json.Data[i].SZIndex +'</span><span class="name">深圳</span><i>5</i></div>';
+
+                        temp = json.Data[i].HZIndex<0?'-':json.Data[i].HZIndex;
+                        htmlCity += '<div id="city-hz" data-idx="4" class="disable city-item flex-row-item city-item310000"><span class="JS_num num">'+ temp +'</span><span class="name">杭州</span><i>5</i></div>';
+                        //              htmlCity += '<div id="city-hz" data-idx="3" class="disable city-item flex-row-item city-item310000"><span class="JS_num num">'+ json.Data[i].HZIndex +'</span><span class="name">杭州</span><i>4</i></div>';
+
+                    }
+                    // 南京各区
+                    if($.inArray(parseInt(json.Data[i].Areacode), dictArea) != -1){
+                        if(json.Data[i].Areacode!=302){
+                            //console.log(json);
+                            htmlArea += '<div class="JS_cityArea JS_areaColor area-item" data-areaCode="'+ json.Data[i].Areacode +'"><div class="hd"><span class="name">'+ json.Data[i].Areaname +'</span><span class="time">'+ json.Data[i].Time +'</span><span class="JS_num num" style="color:'+judgeLevel(json.Data[i].Index)+';">'+ (json.Data[i].Index) +'<i>'+num2text(json.Data[i].Index)+'</i></span></div><div class="bd"><div class="chartbox" id="chart_'+ json.Data[i].Areacode +'"></div></div></div>';
+                        }
+                    }
+                }
+
+                $("#NJ_MAIN").html(htmlNJ);
+                $(".JS_area").html(htmlArea);
+                $(".JS_city").html(htmlCity);
+                // 指数颜色
+                $(".JS_num").each(function(){
+                    var _val = $.trim($(this).text());
+                    var levelColor=judgeLevel(_val);
+                    // $(this).css('color',levelColor);
+                    $(this).parents('.JS_areaColor').attr('data-areaColor', levelColor);
+                })
+
+                var dataNJColor = $(".JS_nanjing").attr('data-areaColor');
+
+                $(".JS_nanjing").css('background-color',dataNJColor);
+
+                AreaDataFunc();
+                if(allAreaChart){
+                    updateAllAreaChart();
+                }else{
+                    setTimeout(function(){
+                        updateAllAreaChart();
+                    },1500)
+                }
+
+            });
+
+        }
+        function AreaMainCallback(areaCode,areaData,dataNJColor){
+            var dataTime = [],
+                dataIndex = [],
+                dataIndexBJ = [],
+                dataIndexQD = [],
+                dataIndexHZ = [],
+                dataIndexSZ = [];
+            var hour=null,
+                hourTime=[],
+                hourIndex=[];
+
+            var dateNow=new Date()
+            areaData.Data.sort(function(a,b){
+                var at = a.Time.split(':'),bt=b.Time.split(':');
+                return (parseInt(at[0])*60+parseInt(at[1]))-(parseInt(bt[0])*60+parseInt(bt[1]))
+            });
+
+            var l=areaData.Data.length-1,last=l,h,idx=0;
+            for(var i = l; i >0; i--){
+                h=areaData.Data[i].Time.substr(0,2)+':00';
+                if(hour!=h){
+                    hourTime.push(h);
+                    hour=h;
+                    idx=hourTime.length-1;
+                    hourIndex[idx]=[[],[],[],[],[]];
+                }
+
+                //fixed -1 bug//start
+                var temp_bug_numIndex = areaData.Data[i].Index>-1?areaData.Data[i].Index:areaData.Data[i-1].Index;
+                hourIndex[idx][0].push(temp_bug_numIndex);
+                hourIndex[idx][1].push(areaData.Data[i].BJIndex);
+                hourIndex[idx][2].push(areaData.Data[i].QDIndex);
+                hourIndex[idx][3].push(areaData.Data[i].SZIndex);
+                hourIndex[idx][4].push(areaData.Data[i].HZIndex);
+                dataTime.push(areaData.Data[i].Time);
+                dataIndex.push({
+                    color: judgeLevel(temp_bug_numIndex),
+                    y: temp_bug_numIndex<0?null:temp_bug_numIndex
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-1.png)'}:null
+                });
+                //fixed -1 bug//end
+                dataIndexBJ.push({
+                    color: judgeLevel(areaData.Data[i].BJIndex),
+                    y: areaData.Data[i].BJIndex<0?null:areaData.Data[i].BJIndex
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-2.png)'}:null
+                });
+                dataIndexQD.push({
+                    color: judgeLevel(areaData.Data[i].QDIndex),
+                    y: areaData.Data[i].QDIndex<0?null:areaData.Data[i].QDIndex
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-3.png)'}:null
+                });
+                dataIndexSZ.push({
+                    color: judgeLevel(areaData.Data[i].SZIndex),
+                    y: areaData.Data[i].SZIndex<0?null:areaData.Data[i].SZIndex
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-4.png)'}:null
+                });
+                dataIndexHZ.push({
+                    color: judgeLevel(areaData.Data[i].HZIndex),
+                    y: areaData.Data[i].HZIndex<0?null:areaData.Data[i].HZIndex
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-5.png)'}:null
+                });
+            }
+
+            dataTime.reverse();
+            dataIndex.reverse();
+            dataIndexBJ.reverse();
+            dataIndexQD.reverse();
+            dataIndexHZ.reverse();
+            dataIndexSZ.reverse();
+            //add-20161205
+            function _fun20161205(dataIndex){
+                $.each(dataIndex, function(i,e) {
+                    if(i>0){
+                        if(e.y==null && (dataIndex[i-1].y!==null)){
+                            e.y = dataIndex[i-1].y;
+                        }
+                    }
+                });
+                return dataIndex;
+            }
+            dataIndex = _fun20161205(dataIndex);
+            dataIndexBJ = _fun20161205(dataIndexBJ);
+            dataIndexQD = _fun20161205(dataIndexQD);
+            dataIndexHZ = _fun20161205(dataIndexHZ);
+            dataIndexSZ = _fun20161205(dataIndexSZ);
+            // 小时数值
+            hourTime.reverse();
+            hourIndex.reverse();
+
+            var y,
+                dataHourIndex=[],
+                dataHourIndexBJ=[],
+                dataHourIndexQD=[],
+                dataHourIndexHZ=[],
+                dataHourIndexSZ=[];
+            var last=hourIndex.length-1;
+            for(var i=0;i<=last;i++){
+                y=getAVG(hourIndex[i][0]);
+                dataHourIndex.push({
+                    color: judgeLevel(y),
+                    y: y<0?null:y
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-1.png)'}:null
+                });
+
+                y=getAVG(hourIndex[i][1]);
+                dataHourIndexBJ.push({
+                    color: judgeLevel(y),
+                    y: y<0?null:y
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-2.png)'}:null
+                });
+
+                y=getAVG(hourIndex[i][2]);
+                dataHourIndexQD.push({
+                    color: judgeLevel(y),
+                    y: y<0?null:y
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-3.png)'}:null
+                });
+
+                y=getAVG(hourIndex[i][3]);
+                dataHourIndexSZ.push({
+                    color: judgeLevel(y),
+                    y: y<0?null:y
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-4.png)'}:null
+                });
+
+                y=getAVG(hourIndex[i][4]);
+                dataHourIndexHZ.push({
+                    color: judgeLevel(y),
+                    y: y<0?null:y
+                    ,marker:i==last?{width:15,height:15,symbol:'url(./assets/img/num-5.png)'}:null
+                });
+            }
+
+            var allSeries=[{
+                name: '南京',
+                color: dataNJColor,
+                data: dataIndex
+                ,marker:markerStyle
+            },
+                {
+                    name: '北京',
+                    color: dataBJColor,
+                    data: dataIndexBJ
+                    ,marker:markerStyle
+                },
+                {
+                    name: '青岛',
+                    color: dataQDColor,
+                    data: dataIndexQD
+                    ,marker:markerStyle
+                },
+                {
+                    name: '深圳',
+                    color: dataSZColor,
+                    data: dataIndexSZ
+                    ,marker:markerStyle
+                },
+                {
+                    name: '杭州',
+                    color: dataHZColor,
+                    data: dataIndexHZ
+                    ,marker:markerStyle
+                }]
+                ,hourSeries=[{
+                name: '南京',
+                color: dataNJColor,
+                data: dataHourIndex
+                ,marker:markerStyle
+            },
+                {
+                    name: '北京',
+                    color: dataBJColor,
+                    data: dataHourIndexBJ
+                    ,marker:markerStyle
+                },
+                {
+                    name: '青岛',
+                    color: dataQDColor,
+                    data: dataHourIndexQD
+                    ,marker:markerStyle
+                },
+                {
+                    name: '深圳',
+                    color: dataSZColor,
+                    data: dataHourIndexSZ
+                    ,marker:markerStyle
+                },
+                {
+                    name: '杭州',
+                    color: dataHZColor,
+                    data: dataHourIndexHZ
+                    ,marker:markerStyle
+                }];
+            __SeriesCache__[0][areaCode]={
+                time:dataTime,
+                data:allSeries
+            }
+            __SeriesCache__[1][areaCode]={
+                time:hourTime,
+                data:hourSeries
+            }
+            setMainAreaChart(areaCode);
+        }
+
+        function setMainAreaChart(areaCode){
+            var l=__SeriesCache__[__st][areaCode].time.length;
+            // var maxWidth=10*(__ctt==1?l/12:l);
+            var maxWidth=10*l;
+            maxWidth=maxWidth>screenWidth?maxWidth:screenWidth;
+
+            var chartOptions = {
+                chart: {
+                    renderTo: 'chart_'+areaCode,
+                    height: 200,
+                    width: maxWidth,
+                    margin: [40,0,40,0],
+                    backgroundColor:'transparent',
+                    // zoomType:'x',
+                    panning: true,
+                    panKey: 'shift',
+                    resetZoomButton:{
+                        position:{
+                            x: -100,
+                            y: -100
+                        }
+                    },
+                    events: {
+                        selection: function(e) {
+                            // alert(JSON.stringify(e));
+                        }
+                    }
+                    //plotBackgroundImage: 'assets/img/chart-bg.png'
+                },
+                xAxis: {
+                    categories: __SeriesCache__[__st][areaCode].time,
+                    tickLength: 0,
+                    tickInterval:1,//__ctt==1?12:1,
+                    lineColor: '#efefef',
+                    lineWidth: 0.5,
+                    labels: {
+                        y: 15,
+                        style: {
+                            color: '#bcbcbc',
+                            fontSize: 8
+                        }
+                    }
+                },
+                yAxis:{
+                    max:10,
+//              min:0,
+                    gridLineWidth: 0.5,
+                    gridLineColor:'#efefef',
+                    lineWidth:0,
+                    tickInterval:0.5
+                },
+                series: __SeriesCache__[__st][areaCode].data
+            };
+            allAreaChart = new Highcharts.Chart(chartOptions);
+            updateAllAreaChart();
+
+            /*var temp = __SeriesCache__[__st][areaCode].data[0].data;
+             if(temp.length>0){
+             var $cobj = $('#chart_'+areaCode);
+             if(temp[0].y==null){
+             $cobj.css("position","relative");
+             var syl = 'width: 40%;position: absolute;top: 0;bottom:0;right: 50%;margin:auto;margin-right: -20%;';
+             $cobj.append("<img src='"+noDataImgSrc+"' style='"+syl+"' class='JsNoData' />");
+             }else{
+             $cobj.find('.JsNoData').remove();
+             }
+             }*/
+
+            $('#chart_1').scrollLeft(maxWidth);
+        }
+
+        function AreaDataFunc(){
+            // 各区图表
+            $(".JS_cityArea").each(function(){
+                var areaCode = $(this).attr('data-areaCode');
+                var areaColor = $(this).attr('data-areaColor');
+                getJSONData(remoteareaUrl+areaCode,areaUrl+areaCode,function(areaData){
+                    AreaCallback(areaCode,areaData,areaColor);
+                });
+            });
+        }
+
+        function AreaCallback(areaCode,areaData,areaColor){
+            //areaData.Data.reverse();
+            var temp = false;
+            $.each(areaData.Data, function(i,e) {
+                if(e.Index>0 && !temp){
+                    //console.log(temp);
+                    $("[data-areacode='"+areaCode+"']").find(".JS_num").empty().append(areaData.Data[i].Index+"<i>"+num2text(areaData.Data[i].Index)+"</i>");
+                    temp = true;
+                }
+            });
+            areaData.Data.reverse();
+            var dataTime = [],
+                dataIndex = [],
+                dataAll = [],
+                nowIndex,
+                startINdex,
+                endIndex;
+            // areaData.Data.reverse();
+            //修正时间
+            areaData.Data.sort(function(a,b){
+                var at = a.Time.split(':'),bt=b.Time.split(':');
+                return (parseInt(at[0])*60+parseInt(at[1]))-(parseInt(bt[0])*60+parseInt(bt[1]))
+            });
+
+
+            var hour=null,
+                hourTime=[],
+                hourIndex=[];
+            for(var i = 0,l=areaData.Data.length; i < l; i++){
+                h=areaData.Data[i].Time.substr(0,2)+':00';
+                if(hour!=h){
+                    hourTime.push(h);
+                    hour=h;
+                    idx=hourTime.length-1;
+                    hourIndex[idx]=[];
+                }
+                //fixed -1 bug//start
+                var temp_bug_numIndex = areaData.Data[i].Index<0?areaData.Data[i-1].Index:areaData.Data[i].Index;
+                hourIndex[idx].push(temp_bug_numIndex);
+                dataTime.push(areaData.Data[i].Time);
+                dataIndex.push({
+                    color: judgeLevel(temp_bug_numIndex),
+                    y: temp_bug_numIndex<0?null:temp_bug_numIndex
+                });
+                //fixed -1 bug//end
+            }
+
+            var last=hourIndex.length-1
+                ,dataHourIndex=[],y;
+            for(var i=0;i<=last;i++){
+                y=getAVG(hourIndex[i]);
+                dataHourIndex.push({
+                    color: judgeLevel(y),
+                    y: y<0?null:y
+                });
+            }
+
+            //add-20161205
+            $.each(dataIndex, function(i,e) {
+                if(i>0){
+                    if(e.y==null && (dataIndex[i-1].y!==null)){
+                        e.y = dataIndex[i-1].y;
+                    }
+                }
+            });
+
+            __SeriesCache__[0][areaCode]={
+                time:dataTime,
+                data:dataIndex,
+                color:areaColor,
+                name:AreaDic[areaCode]
+            };
+
+            __SeriesCache__[1][areaCode]={
+                time:hourTime,
+                data:dataHourIndex,
+                color:areaColor,
+                name:AreaDic[areaCode]
+            };
+
+            setAreaChart(areaCode);
+        }
+
+        function setAreaChart(areaCode){
+            var l=__SeriesCache__[__st][areaCode].time.length;
+            var maxWidth=10*l;//(__ctt==1?l/12:l);
+            maxWidth=maxWidth>screenWidth?maxWidth:screenWidth;
+            var areaColor=__SeriesCache__[__st][areaCode].areaColor;
+            var chartOptions = {
+                chart: {
+                    renderTo: 'chart_'+areaCode,
+                    height: 140,
+                    width: maxWidth,
+                    margin: [40,0,40,0],
+                    backgroundColor:'transparent',
+                    // zoomType:'x',
+                    panning: true,
+                    panKey: 'shift',
+                    resetZoomButton:{
+                        position:{
+                            x: -100,
+                            y: -100
+                        }
+                    },
+                    events: {
+                        selection: function(e) {
+                            // alert(e);
+                        }
+                    }
+                },
+                xAxis: {
+                    categories: __SeriesCache__[__st][areaCode].time,
+                    tickLength: 0,
+                    tickInterval: 1,//__ctt==1?12:1,
+                    lineColor: '#efefef',
+                    lineWidth: 0,
+                    labels: {
+                        y: 15,
+                        style: {
+                            color: '#bcbcbc',
+                            fontSize: 8
+                        }
+                    }
+                },
+                yAxis:{
+                    max:10,
+//              min:0,
+                    gridLineWidth: 0,
+                    gridLineColor:'#efefef',
+                    lineWidth:0,
+                    // tickInterval:1,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                series: [{
+                    name: AreaDic[areaCode],
+                    color: __SeriesCache__[__st][areaCode].color,
+                    data: __SeriesCache__[__st][areaCode].data,
+                    marker:markerStyle
+                }]
+            };
+
+            var chart = new Highcharts.Chart(chartOptions);
+
+            /*var temp = __SeriesCache__[__st][areaCode].data;
+             if(temp.length>0){
+             var $cobj = $('#chart_'+areaCode);
+             if(temp[0].y==null){
+             $cobj.css("position","relative");
+             var syl = 'width: 40%;position: absolute;top: 0;right: 50%;margin-right: -20%;';
+             $cobj.append("<img src='"+noDataImgSrc+"' style='"+syl+"' class='JsNoData' />");
+             }else{
+             $cobj.find('.JsNoData').remove();
+             }
+             }*/
+
+            $('.chartbox').scrollLeft(maxWidth);
+        }
+
+        // 交通指数颜色
+        function judgeLevel(val){
+            var levelColor='#228B22';
+            if (val >= 0 && val < 2){
+                levelColor = '#228B22';
+            } else if(val >= 2 && val < 4){
+                levelColor = '#CDAD00';
+            } else if (val >= 4 && val < 6){
+                levelColor = '#EE7600';
+            } else if (val >= 6 && val < 8){
+                levelColor = '#EE4000';
+            } else if (val >= 8 && val < 10){
+                levelColor = '#EE0000';
+            }
+            return levelColor
+        }
+        function num2text(val){
+            if (val >= 0 && val < 2){
+                return '畅通'
+            } else if(val >= 2 && val < 4){
+                return '基本畅通'
+            } else if (val >= 4 && val < 6){
+                return '轻度拥堵'
+            } else if (val >= 6 && val < 8){
+                return '中度拥堵'
+            } else if (val >= 8 && val < 10){
+                return '严重拥堵'
+            }
+            return ''//'unknown'
+        }
+        // 图表全局配置
+        Highcharts.setOptions({
+            title:{
+                text: false
+            },
+            chart: {
+                type: 'line'
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                formatter:function(){
+                    var name=this.series.name;
+                    // style="color:'+judgeLevel(this.y)+'!important;"
+                    return '<span><small>'+this.x+'</small><br/>'+name+': '+this.y+' ['+num2text(this.y)+']</span>';
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    enabled: false
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            lang:{
+                rangeSelectorZoom: ''
+            }
+        });
+        $(document).on('click','.charttimer-item',function(event){
+            event.preventDefault();
+            $('.charttimer-item').removeClass('active');
+            $(this).addClass('active');
+            var i=$(this).data('ctt');
+            __ctt=parseInt(i);
+            __st=__ctt;
+            setMainAreaChart(1);
+            [301,2138698,2139790,2139809,2139830,2140011].forEach(function(c,i){
+                setAreaChart(c);
+            });
+        });
+        window.onresize=function(){
+            screenWidth=$(window).width();
+            // setMainAreaChart(1);
+            // [301,2138698,2139790,2139809,2139830,2140011].forEach(function(c,i){
+            //     setAreaChart(c);
+            // });
+        }
+    });
+    function getAVG(arr){
+        if(arr==undefined||arr.length==0) return null;
+        var avg=0;
+        for(var i=0,l=arr.length;i<l;i++){
+            avg=avg+arr[i]-0;
+        }
+        avg/=i;
+        return avg.toFixed(1)-0;
+    }
+    var markerStyle={
+        symbol: 'circle',
+        fillColor: null,
+        lineWidth: 0.5,
+        radius: 3.5,
+        lineColor: null
+        ,states:{
+            hover:{
+                enabled:true,
+                fillColor: null,
+                lineColor: null
+            },
+            select:{
+                enabled:true,
+                fillColor: null,
+                lineColor: null
+            }
+        }
+    };
+</script>
+</body>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1259663983'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1259663983' type='text/javascript'%3E%3C/script%3E"));</script>
+</html>
