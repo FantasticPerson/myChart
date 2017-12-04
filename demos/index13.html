@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
+<script>
+    function draw(scale,count,colorArr,color2,color3,color4,color5){
+        var canvas=document.getElementById("canvas");
+        var context=canvas.getContext("2d")
+        var cAngle = Math.PI;
+        var centerX = 320*scale;
+        var centerY = 320*scale;
+
+        context.lineWidth = 70*scale;
+        context.beginPath();
+        var radialGradient1 =context.createRadialGradient(centerX, centerY, 280*scale, centerX, centerY, 245*scale);
+        radialGradient1.addColorStop(0, colorArr[0][0]);
+        radialGradient1.addColorStop(1, colorArr[0][1]);
+        context.strokeStyle=radialGradient1;
+        context.arc(centerX,centerY,245*scale,cAngle,cAngle+Math.PI/14-Math.PI/140);
+        context.stroke();
+        cAngle = cAngle+Math.PI/14
+
+        for(var i=0;i<6;i++){
+            context.lineWidth = 70*scale;
+            context.beginPath();
+            var radialGradient1 =context.createRadialGradient(centerX, centerY, 280*scale, centerX, centerY, 245*scale);
+            radialGradient1.addColorStop(0, colorArr[i+1][0]);
+            radialGradient1.addColorStop(1, colorArr[i+1][1]);
+            context.strokeStyle=radialGradient1;
+            context.arc(centerX,centerY,245*scale,cAngle+Math.PI/280,cAngle+Math.PI/7-Math.PI/140);
+            context.stroke();
+            cAngle = cAngle+Math.PI/7;
+        }
+
+        context.lineWidth = 70*scale;
+        context.beginPath();
+        var radialGradient1 =context.createRadialGradient(centerX, centerY, 280*scale, centerX, centerY, 245*scale);
+        radialGradient1.addColorStop(0, colorArr[7][0]);
+        radialGradient1.addColorStop(1, colorArr[7][1]);
+        context.strokeStyle=radialGradient1;
+        // context.strokeStyle="red";
+        context.arc(centerX,centerY,245*scale,cAngle+Math.PI/280,cAngle+Math.PI/14);
+        context.stroke();
+
+        context.lineWidth = 18*scale;
+        context.beginPath();
+        context.strokeStyle = color2;
+        context.arc(centerX,centerY,185*scale,Math.PI,Math.PI*2)
+        context.stroke()
+
+        context.save()
+        context.fillStyle = color3;
+        context.translate(centerX, centerY);
+        context.rotate(count/100*Math.PI);
+        context.beginPath();
+        context.moveTo(0,0);
+        context.lineTo(0,-15*scale);
+        context.lineTo(-245*scale,0);
+        context.lineTo(0,15*scale);
+        context.lineTo(0,0);
+        context.fill();
+        context.closePath();
+        context.restore();
+
+        context.lineWidth = 22*scale;
+        context.beginPath();
+        context.strokeStyle=color3;
+        context.arc(centerX,centerY,11*scale,0,Math.PI*2)
+        context.stroke()
+
+        context.lineWidth = 12*scale;
+        context.beginPath();
+        context.strokeStyle=color4;
+        context.arc(centerX,centerY,6*scale,0,Math.PI*2)
+        context.stroke()
+
+        for(var i=0;i<5;i++){
+            context.save();
+            context.fillStyle = color5;
+            context.font = 25*scale+"px serif";
+            context.textBaseline = "middle";
+            context.textAlign = 'center';
+            context.fillText(String(25*i), centerX+300*scale*Math.sin(Math.PI+Math.PI/4*i+Math.PI/2) , centerY-300*scale*Math.cos(Math.PI+Math.PI/4*i+Math.PI/2));
+            context.restore();
+        }
+    }
+    draw(1,50,[['#123','#456'],['#123','#456'],['#123','#321'],['#123','#321'],['#123','#321'],['#123','#321'],['#123','#321'],['#123','#321']],'orange','blue','orange','#238B23')
+</script>
+</body>
+</html>

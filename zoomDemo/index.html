@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.elevatezoom.min.js"></script>
+</head>
+<body>
+    <img src="image2.jpg" id="img_01" style="width: 310px;height: 213px;"  data-zoom-image="image2.jpg">
+    <script>
+        $("#img_01").elevateZoom({constrainType:"height", constrainSize:274, zoomType: "lens", containLensZoom: true, gallery:'gallery_01', cursor: 'pointer', galleryActiveClass: "active"});
+    </script>
+</body>
+</html>

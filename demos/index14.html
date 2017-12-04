@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<canvas id="canvas" width="1024" height="768" style="border:1px solid #aaa;display:block;margin:50px auto;"></canvas>
+<script>
+    CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+        if (w < 2 * r) {r = w / 2;}
+        if (h < 2 * r){ r = h / 2;}
+        this.beginPath();
+        this.moveTo(x+r, y);
+        this.arcTo(x+w, y, x+w, y+h, r);
+        this.arcTo(x+w, y+h, x, y+h, r);
+        this.arcTo(x, y+h, x, y, r);
+        this.arcTo(x, y, x+w, y, r);
+        this.closePath();
+        return this;
+    }
+    function draw(id,numArr,scale){
+        var canvas=document.getElementById("canvas");
+        var context=canvas.getContext("2d")
+        var width = 980*scale;
+        var height = 540*scale;
+        var startX = 30*scale;
+        var startY = 540*scale - 90 *scale;
+        var gap = 68*scale;
+
+        var contentWidth = 920*scale
+        for(var i=0;i<7;i++){
+            context.strokeStyle = "black";
+            context.beginPath();
+            context.moveTo(startX,startY-gap*i)
+            context.lineTo(startX+contentWidth,startY-gap*i)
+            context.stroke()
+            context.closePath();
+            context.restore();
+        }
+
+        var contentGap = 40*scale;
+        var contentItemW = (contentWidth - contentGap*(numArr.length+1))/numArr.length;
+        var maxNum=0;
+        for(var i=0;i<numArr.length;i++){
+            if(numArr[i].number > maxNum){
+                maxNum = numArr[i].number;
+            }
+        }
+        for(var i=0;i<numArr.length;i++){
+            var itemHight = gap*6*(numArr[i].number)/maxNum
+            var linearGradient1 = context.createLinearGradient(0,startY-itemHight,0,startY);
+            linearGradient1.addColorStop(0  , numArr[i].color[0]);
+            linearGradient1.addColorStop(1  , numArr[i].color[1]);
+            context.fillStyle   = linearGradient1;
+            context.beginPath()
+            context.moveTo(startX+contentGap*(i+1)+contentItemW*i,startY)
+            context.lineTo(startX+contentGap*(i+1)+contentItemW*i+contentItemW/2,startY-itemHight)
+            context.lineTo(startX+contentGap*(i+1)+contentItemW*i+contentItemW,startY)
+            context.lineTo(startX+contentGap*(i+1)+contentItemW*i,startY)
+            context.fill()
+            context.closePath();
+            context.restore()
+
+            context.save();
+            context.fillStyle = "#238B23";
+            context.font = 30*scale+"px serif";
+            context.textBaseline = "middle";
+            context.textAlign = 'center';
+            context.fillText(numArr[i].title, startX+contentGap*(i+1)+contentItemW*i+contentItemW/2 , startY+35*scale);
+            context.restore();
+
+            
+            context.strokeStyle = numArr[i].color
+            context.fillStyle = "rgba(0,0,0,0.5)"
+            context.roundRect(startX+contentGap*(i+1)+contentItemW*i+contentItemW/2-50*scale,startY-itemHight-40*scale,100*scale,40*scale,20)
+            context.fill();
+            context.stroke();
+            context.restore()
+            
+            context.save();
+            context.fillStyle = "#FFF";
+            context.font = 20*scale+"px serif";
+            context.textBaseline = "middle";
+            context.textAlign = 'center';
+            context.fillText(numArr[i].number, startX+contentGap*(i+1)+contentItemW*i+contentItemW/2 , startY-itemHight-20*scale);
+            context.restore();
+        }
+    }
+
+    draw('canvas',[{
+        number:5680,
+        title:'资质',
+        color:['#123','#321'],
+        fillColor:'rgba(0,0,0,0.5)'
+    },{
+        number:8921,
+        title:'良好',
+        color:['#321','#123'],
+        fillColor:'rgba(0,0,0,0.5)'
+    },{
+        number:3109,
+        title:'不良',
+        color:['#456','#654'],
+        fillColor:'rgba(0,0,0,0.5)'
+    },{
+        number:4186,
+        title:'修复',
+        color:['#654','#456'],
+        fillColor:'rgba(0,0,0,0.5)'//顶上圆角矩形背景的颜色
+    }],1)
+</script>
+</body>
+</html>
